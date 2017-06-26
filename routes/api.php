@@ -27,15 +27,29 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::post('createUser', ['as' => 'createUser', 'uses' => 'Auth\LoginController@createUser']);
     Route::put('editUser/{id}',['as' => 'editUser', 'uses' =>'Auth\LoginController@editUser']);
 
-
+//brand routes..........................................
     Route::get('getBrand',['as' => 'getBrand', 'uses' =>'BrandModelController@getBrand']);
     Route::post('createBrand',['as' => 'createBrand', 'uses' =>'BrandModelController@createBrand']);
     Route::put('editBrand/{id}',['as' => 'editBrand', 'uses' =>'BrandModelController@editBrand']);
 
-
-    Route::get('getModels',['as' => 'getBrand', 'uses' =>'BrandModelController@getBrand']);
+//models routys..........................................
+//    Route::get('getModels',['as' => 'getBrand', 'uses' =>'BrandModelController@getBrand']);
     Route::post('createModels',['as' => 'createModels', 'uses' =>'BrandModelController@createModels']);
-    Route::put('editModels/{id}',['as' => 'editModels', 'uses' =>'BrandModelController@editModels']);
+//    Route::put('editModels/{id}',['as' => 'editModels', 'uses' =>'BrandModelController@editModels']);
+    Route::get('loadModels/{id}',['as' => 'loadModels', 'uses' =>'BrandModelController@loadModels']);
+
+//service & service_type routes...........................
+    Route::get('getService',['as' => 'getService', 'uses' =>'ServiceController@getService']);
+    Route::post('createService',['as' => 'createService', 'uses' =>'ServiceController@createService']);
+    Route::post('createServiceType',['as' => 'createServiceType', 'uses' =>'ServiceController@createServiceType']);
+    Route::put('editService/{id}',['as' => 'editService', 'uses' =>'ServiceController@editService']);
+    Route::get('loadServiceTypes/{id}',['as' => 'loadServiceTypes', 'uses' =>'ServiceController@loadServiceTypes']);
+
+//technician routes.......................................
+    Route::get('getTechnician',['as' => 'getTechnician', 'uses' =>'TechnicianController@getTechnician']);
+    Route::post('createTechnician',['as' => 'createTechnician', 'uses' =>'TechnicianController@createTechnician']);
+    Route::put('editTechnician/{id}',['as' => 'editTechnician', 'uses' =>'TechnicianController@editTechnician']);
+    Route::get('loadTechnician/{id}',['as' => 'loadTechnician', 'uses' =>'TechnicianController@loadTechnician']);
 
 
 });

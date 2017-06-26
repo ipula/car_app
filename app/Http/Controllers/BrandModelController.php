@@ -23,15 +23,6 @@ class BrandModelController extends Controller
 
         if($brand->save())
         {
-//            $models=new Models();
-//            $models->model_name=$data['model_name'];
-//            $models->save();
-//
-//            if($models->save())
-//            {
-//
-//            }
-
             return response()->json(["msg"=>"New Brand Created"],200);
         }
         else
@@ -62,6 +53,7 @@ class BrandModelController extends Controller
     public function createModels(Request $request)
     {
         $data=$request->all();
+        $success=false;
 
         $brand=Brand::find($data['brand_id']);
 
@@ -69,13 +61,27 @@ class BrandModelController extends Controller
         {
             $models=new Models();
             $models->models_name=$data['addedModels'][$x]['models_name'];
-            $models->save();
+            $success=$models->save();
             if($models->save())
             {
                 $brand->getModels()->attach(Models::max('models_id'));
             }
         }
 
+        if($success)
+        {
+            return response()->json(["msg"=>" Models Created"],200);
+        }
+        else
+        {
+            return response()->json(["msg"=>"Models Created Failed"],500);
+        }
 
+    }
+
+    public function loadModels($id=null)
+    {
+        $brand=Brand::find($id)->getModels()->get();
+        return response()->json(['models'=>$brand],200);
     }
 }

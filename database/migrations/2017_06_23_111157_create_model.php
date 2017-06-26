@@ -13,9 +13,9 @@ class CreateModel extends Migration
      */
     public function up()
     {
-        Schema::create('model', function (Blueprint $table) {
-            $table->increments('model_id')->unsigned()->nullable(false);
-            $table->string('model_name',450)->default(null)->nullable();
+        Schema::create('models', function (Blueprint $table) {
+            $table->increments('models_id')->unsigned()->nullable(false);
+            $table->string('models_name',450)->default(null)->nullable();
         });
     }
 
@@ -26,6 +26,6 @@ class CreateModel extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('model');
+        Schema::dropIfExists('models');
     }
 }
