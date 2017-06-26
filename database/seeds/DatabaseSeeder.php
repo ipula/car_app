@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
         $user = new User();
         $user->name = 'ipula';
         $user->email = 'ipula@gmail.com';
-        $user->password = hash('sha512','123456');
+        $user->password = hash('sha512','123');
         $user->role = "admin";
         $user->save();
     }

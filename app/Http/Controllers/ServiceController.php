@@ -20,6 +20,7 @@ class ServiceController extends Controller
         $service= new Service();
         $service->service_name=$data['service_name'];
         $service->service_price=$data['service_price'];
+        $service->service_models_id=$data['service_models_id'];
         $service->save();
 
         if($service->save())
@@ -85,6 +86,11 @@ class ServiceController extends Controller
     public function loadServiceTypes($id=null)
     {
         $service=Service::find($id)->getServiceTypes()->get();
+        return response()->json(['serviceTypes'=>$service],200);
+    }
+    public function loadServiceByModels($id=null)
+    {
+        $service=Service::where('service_models_id','=',$id)->get();
         return response()->json(['serviceTypes'=>$service],200);
     }
 }

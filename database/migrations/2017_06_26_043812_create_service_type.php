@@ -28,6 +28,6 @@ class CreateServiceType extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('service_type');
+        Schema::dropIfExists('brand_models');
     }
 }
