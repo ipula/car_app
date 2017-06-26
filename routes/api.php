@@ -51,5 +51,11 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::put('editTechnician/{id}',['as' => 'editTechnician', 'uses' =>'TechnicianController@editTechnician']);
     Route::get('loadTechnician/{id}',['as' => 'loadTechnician', 'uses' =>'TechnicianController@loadTechnician']);
 
+//vehicle routes.......................................
+    Route::get('getVehicle',['as' => 'getVehicle', 'uses' =>'VehicleController@getVehicle']);
+    Route::post('createVehicle',['as' => 'createVehicle', 'uses' =>'VehicleController@createVehicle']);
+    Route::put('editVehicle/{id}',['as' => 'editVehicle', 'uses' =>'VehicleController@editVehicle']);
+    Route::get('loadVehicle/{id}',['as' => 'loadTechnician', 'uses' =>'VehicleController@loadVehicle']);
+
 
 });

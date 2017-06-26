@@ -16,6 +16,7 @@ class CreateVehiclesTable extends Migration
         Schema::create('vehicle', function (Blueprint $table) {
             $table->increments('vehicle_id')->unsigned()->nullable(false);
             $table->string('vehicle_cust_name',450)->default(null)->nullable();
+            $table->string('vehicle_no',450)->default(null)->nullable();
             $table->string('vehicle_cust_tel1',450)->default(null)->nullable();
             $table->string('vehicle_cust_tel2',450)->default(null)->nullable();
             $table->string('vehicle_cust_address',450)->default(null)->nullable();
