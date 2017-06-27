@@ -62,6 +62,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
 //job card routes
 
      Route::get('getAllJobCards',['as' => 'getAllJobCards', 'uses' =>'JobCardController@getAllJobCards']);
+     Route::get('getUsersJobCards/{id}',['as' => 'getUsersJobCards', 'uses' =>'JobCardController@getUsersJobCards']);
      Route::post('createJobCard',['as' => 'createJobCard', 'uses' =>'JobCardController@createJobCard']);
      Route::get('loadJobCard/{id}',['as' => 'loadJobCard', 'uses' =>'JobCardController@loadJobCard']);
      Route::put('editJobDetails/{id}',['as' => 'editJobDetails', 'uses' =>'JobCardController@editJobDetails']);
