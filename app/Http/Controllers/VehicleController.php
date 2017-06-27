@@ -71,4 +71,9 @@ class VehicleController extends Controller
         $vehicle=Vehicle::with(['getBrand','getModel'])->find($id);
         return response()->json(["vehicle"=>$vehicle],200);
     }
+    public function searchVehicle($number=null)
+    {
+        $vehicle=Vehicle::with(['getBrand','getModel'])->where('vehicle_no','LIKE', '%' . $number . '%')->get();
+        return response()->json(["vehicle"=>$vehicle],200);
+    }
 }
