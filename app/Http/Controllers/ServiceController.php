@@ -11,7 +11,7 @@ class ServiceController extends Controller
     public function getService()
     {
         $service=Service::all();
-        return response()->json(['brand'=>$service],200);
+        return response()->json(['service'=>$service],200);
     }
 
     public function createService(Request $request)
@@ -95,7 +95,7 @@ class ServiceController extends Controller
     }
     public function loadServiceByModelsBrand($brandId=null,$modelId=null)
     {
-        $service=Service::where('service_models_id','=',$modelId)->Orwhere('service_models_id','=',$brandId)->get();
+        $service=Service::where('service_models_id','=',$modelId)->Orwhere('service_brand_id','=',$brandId)->get();
         return response()->json(['serviceTypes'=>$service],200);
     }
 }
