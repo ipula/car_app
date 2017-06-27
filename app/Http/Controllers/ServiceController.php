@@ -93,4 +93,9 @@ class ServiceController extends Controller
         $service=Service::where('service_models_id','=',$id)->get();
         return response()->json(['serviceTypes'=>$service],200);
     }
+    public function loadServiceByModelsBrand($brandId=null,$modelId=null)
+    {
+        $service=Service::where('service_models_id','=',$modelId)->Orwhere('service_models_id','=',$brandId)->get();
+        return response()->json(['serviceTypes'=>$service],200);
+    }
 }

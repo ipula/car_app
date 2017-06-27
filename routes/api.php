@@ -45,6 +45,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::put('editService/{id}',['as' => 'editService', 'uses' =>'ServiceController@editService']);
     Route::get('loadServiceTypes/{id}',['as' => 'loadServiceTypes', 'uses' =>'ServiceController@loadServiceTypes']);
     Route::get('loadServiceByModels/{id}',['as' => 'loadServiceByModels', 'uses' =>'ServiceController@loadServiceByModels']);
+    Route::get('loadServiceByModelsBrand/{brandId}/{modelId}',['as' => 'loadServiceByModelsBrand', 'uses' =>'ServiceController@loadServiceByModelsBrand']);
 
 //technician routes.......................................
     Route::get('getTechnician',['as' => 'getTechnician', 'uses' =>'TechnicianController@getTechnician']);
