@@ -19,6 +19,7 @@ class CreateJobCardsTable extends Migration
             $table->integer('job_card_vehicle_id')->unsigned()->default(null)->nullable();
             $table->integer('job_card_users_id')->unsigned()->default(null)->nullable();
             $table->integer('job_card_users_id')->unsigned()->default(null)->nullable();
+            $table->integer('job_card_status')->default(null)->nullable();
             $table->timestamps();
 
             $table->foreign('job_card_vehicle_id')->references('vehicle_id')->on('vehicle')->onUpdate('cascade')->onDelete('cascade');

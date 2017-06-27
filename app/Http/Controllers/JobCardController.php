@@ -23,6 +23,7 @@ class JobCardController extends Controller
         $jobCard->job_card_vehicle_id=$data['job_card_vehicle_id'];
         $jobCard->job_card_users_id=$data['job_card_users_id'];
         $jobCard->job_card_total=$data['job_card_total'];
+        $jobCard->job_card_status=0;
         $jobCard->save();
 
         if($jobCard->save())
@@ -65,24 +66,50 @@ class JobCardController extends Controller
 
     public function editJobDetails($id=null,Request $request)
     {
-        $job=JobCardDetail::where('job_card_detail_job_card_id','=',$id)->first();
-        $data=$request->all();
-//        return response()->json($job,200);
+        $onGoing=JobCard::find($id);
+        $onGoing->job_card_status=1;
+        $onGoing->save();
+        if($onGoing->save())
+        {
+            $job=JobCardDetail::where('job_card_detail_job_card_id','=',$id)->first();
+            $data=$request->all();
 
-        $job->job_card_detail_technician_id=$data['technician_id'];
-        $job->job_card_detail_comment=$data['job_card_detail_comment'];
-        $job->job_card_detail_status=$data['job_card_detail_status'];
-        $job->job_card_detail_quantity=$data['job_card_detail_quantity'];
+            $job->job_card_detail_technician_id=$data['technician_id'];
+            $job->job_card_detail_comment=$data['job_card_detail_comment'];
+            $job->job_card_detail_status=$data['job_card_detail_status'];
+            $job->job_card_detail_quantity=$data['job_card_detail_quantity'];
+            $job->save();
+
+            if($job->save())
+            {
+                return response()->json(["msg"=>"Job Updated"],500);
+            }
+            else
+            {
+                return response()->json(["msg"=>"Job Update Failed"],500);
+            }
+        }
+        else
+        {
+            return response()->json(["msg"=>"Job Update Failed"],500);
+        }
+
+
+    }
+
+    public function completeJobCard($id=null)
+    {
+        $job=JobCard::find($id);
+        $job->job_card_status=2;
         $job->save();
 
         if($job->save())
         {
-            return response()->json(["msg"=>"Job Updated"],500);
+            return response()->json(["msg"=>"Job Card Complete"],500);
         }
         else
         {
-            return response()->json(["msg"=>"Job Updated"],500);
+            return response()->json(["msg"=>"Job Card Complete Failed"],500);
         }
-
     }
 }
