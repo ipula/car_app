@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\JobCard;
 use App\JobCardDetail;
+use App\ServiceMaterialDetail;
+use App\TechnicianDetail;
 use Illuminate\Http\Request;
 
 class JobCardController extends Controller
@@ -37,7 +39,6 @@ class JobCardController extends Controller
             {
                 $jobCardDetail=new JobCardDetail();
                 $jobCardDetail->job_card_detail_job_card_id=JobCard::max('job_card_id');
-                $jobCardDetail->job_card_detail_technician_id=$data['addedDetail'][$x]['job_card_detail_technician_id'];
                 $jobCardDetail->job_card_detail_service_id=$data['addedDetail'][$x]['job_card_detail_service_id'];
                 $jobCardDetail->job_card_detail_service_type_id=$data['addedDetail'][$x]['job_card_detail_service_type_id'];
                 $jobCardDetail->job_card_detail_comment=$data['addedDetail'][$x]['job_card_detail_comment'];
@@ -45,8 +46,27 @@ class JobCardController extends Controller
                 $jobCardDetail->job_card_detail_quantity=$data['addedDetail'][$x]['job_card_detail_quantity'];
                 $jobCardDetail->job_card_detail_unit_price=$data['addedDetail'][$x]['job_card_detail_unit_price'];
                 $success=$jobCardDetail->save();
+                if($success)
+                    for($y=0; $y<count($data['addedDetail'][$x]['technician']); $y++)
+                    {
+                        $tecDetail=new TechnicianDetail();
+                        $tecDetail->technician_detail_job_card_detail_id=JobCardDetail::max('job_card_detail_id');
+                        $tecDetail->technician_detail_technician_id=$data['addedDetail'][$x]['technician'][$y]['technician_id'];
+                        $tecDetail->save();
 
+                    }
+                    for($y=0; $y<count($data['addedDetail'][$x]['material']); $y++)
+                    {
+                        $material=new ServiceMaterialDetail();
+                        $material->service_material_detail_service_material_id=$data['addedDetail'][$x]['material'][$y]['service_material_id'];
+                        $material->service_material_detail_job_card_detail_id=JobCardDetail::max('job_card_detail_id');
+                        $material->service_material_unit_price=$data['addedDetail'][$x]['material'][$y]['service_material_unit_price'];
+                        $material->service_material_detail_qty=$data['addedDetail'][$x]['material'][$y]['service_material_detail_qty'];
+                        $material->save();
+
+                    }
             }
+
             if($success)
             {
                 return response()->json(["msg"=>"New Job Card Created"],200);
@@ -71,21 +91,67 @@ class JobCardController extends Controller
 
     public function editJobDetails($id=null,Request $request)
     {
+        $data=$request->all();
         $onGoing=JobCard::find($id);
         $onGoing->job_card_status=1;
         $onGoing->save();
         if($onGoing->save())
         {
-            $job=JobCardDetail::where('job_card_detail_job_card_id','=',$id)->first();
-            $data=$request->all();
 
-            $job->job_card_detail_technician_id=$data['technician_id'];
-            $job->job_card_detail_comment=$data['job_card_detail_comment'];
-            $job->job_card_detail_status=$data['job_card_detail_status'];
-            $job->job_card_detail_quantity=$data['job_card_detail_quantity'];
-            $job->save();
+            for($x=0; $x<count($data['addedDetail']); $x++)
+            {
+                $jobCardDetail=JobCardDetail::find($data['addedDetail'][$x]['job_card_detail_id']);
+                $jobCardDetail->job_card_detail_service_id=$data['addedDetail'][$x]['job_card_detail_service_id'];
+                $jobCardDetail->job_card_detail_service_type_id=$data['addedDetail'][$x]['job_card_detail_service_type_id'];
+                $jobCardDetail->job_card_detail_comment=$data['addedDetail'][$x]['job_card_detail_comment'];
+                $jobCardDetail->job_card_detail_status=$data['addedDetail'][$x]['job_card_detail_status'];
+                $jobCardDetail->job_card_detail_quantity=$data['addedDetail'][$x]['job_card_detail_quantity'];
+                $jobCardDetail->job_card_detail_unit_price=$data['addedDetail'][$x]['job_card_detail_unit_price'];
+                $success=$jobCardDetail->save();
 
-            if($job->save())
+                if($jobCardDetail->save())
+                {
+                    $tec=TechnicianDetail::select('technician_detail_technician_id')->where('technician_detail_job_card_detail_id','=',$data['addedDetail'][$x]['job_card_detail_id'])->get();
+                    $mat=ServiceMaterialDetail::select('service_material_detail_service_material_id')->where('service_material_detail_job_card_detail_id','=',$data['addedDetail'][$x]['job_card_detail_id'])->get();
+
+                    for($y=0; $y<count($data['addedDetail'][$x]['technician']); $y++)
+                    {
+
+                        if(in_array($data['addedDetail'][$x]['technician'][$y]['technician_id'],$tec))
+                        {
+
+                        }
+                        else
+                        {
+                            $tecDetail=new TechnicianDetail();
+                            $tecDetail->technician_detail_job_card_detail_id=$data['addedDetail'][$x]['job_card_detail_id'];
+                            $tecDetail->technician_detail_technician_id=$data['addedDetail'][$x]['technician'][$y]['technician_id'];
+                            $tecDetail->save();
+                        }
+                    }
+                    for($y=0; $y<count($data['addedDetail'][$x]['material']); $y++)
+                    {
+                        if(in_array($data['addedDetail'][$x]['material'][$y]['service_material_id'],$mat))
+                        {
+
+                        }
+                        else
+                        {
+                            $material=new ServiceMaterialDetail();
+                            $material->service_material_detail_service_material_id=$data['addedDetail'][$x]['material'][$y]['service_material_id'];
+                            $material->service_material_detail_job_card_detail_id=$data['addedDetail'][$x]['job_card_detail_id'];
+                            $material->service_material_unit_price=$data['addedDetail'][$x]['material'][$y]['service_material_unit_price'];
+                            $material->service_material_detail_qty=$data['addedDetail'][$x]['material'][$y]['service_material_detail_qty'];
+                            $material->save();
+
+                        }
+
+                    }
+                }
+
+            }
+
+            if($success)
             {
                 return response()->json(["msg"=>"Job Updated"],500);
             }

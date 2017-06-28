@@ -11,7 +11,7 @@ class JobCardDetail extends Model
 
     public function getTechnician()
     {
-        return $this->belongsTo('App\Technician','job_card_detail_technician_id');
+        return $this->hasMany('App\TechnicianDetail','technician_detail_job_card_detail_id');
     }
     public function getService()
     {
