@@ -23,7 +23,7 @@ class CreateServiceMaterialDetailsTable extends Migration
             $table->timestamps();
 
             $table->foreign('service_material_detail_service_material_id','id_foreign')->references('service_material_id')->on('service_material')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('service_material_detail_job_card_detail_id','id')->references('job_card_detail_id')->on('invoice_detail')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('service_material_detail_job_card_detail_id','id')->references('job_card_detail_id')->on('job_card_detail')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
