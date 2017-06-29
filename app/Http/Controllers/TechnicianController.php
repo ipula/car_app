@@ -62,4 +62,10 @@ class TechnicianController extends Controller
         $technician=Technician::find($id);
         return response()->json(["technician"=>$technician],200);
     }
+
+    public function searchTechnician($name=null)
+    {
+        $technician=Technician::where('technician_name','LIKE', '%' . $name . '%')->get();
+        return response()->json(["technician"=>$technician],200);
+    }
 }
