@@ -183,4 +183,10 @@ class JobCardController extends Controller
             return response()->json(["msg"=>"Job Card Complete Failed"],500);
         }
     }
+
+    public function getCompleteJobCard()
+    {
+        $jobCard=JobCard::with(['getVehicle.getBrand','getVehicle.getModel','getUser'])->where('job_card_status','=',2)->get();
+        return response()->json(['jobCard'=>$jobCard]);
+    }
 }

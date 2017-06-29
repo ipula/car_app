@@ -46,7 +46,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::get('loadServiceTypes/{id}',['as' => 'loadServiceTypes', 'uses' =>'ServiceController@loadServiceTypes']);
     Route::get('loadServiceByModels/{id}',['as' => 'loadServiceByModels', 'uses' =>'ServiceController@loadServiceByModels']);
     Route::get('loadServiceByModelsBrand/{brandId}/{modelId}',['as' => 'loadServiceByModelsBrand', 'uses' =>'ServiceController@loadServiceByModelsBrand']);
-    Route::get('loadServiceTypesDetails',['as' => 'loadServiceTypesDetails', 'uses' =>'ServiceController@loadServiceTypesDetails']);
+    Route::post('loadServiceTypesDetails',['as' => 'loadServiceTypesDetails', 'uses' =>'ServiceController@loadServiceTypesDetails']);
 
 //technician routes.......................................
     Route::get('getTechnician',['as' => 'getTechnician', 'uses' =>'TechnicianController@getTechnician']);
@@ -69,6 +69,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
      Route::get('loadJobCard/{id}',['as' => 'loadJobCard', 'uses' =>'JobCardController@loadJobCard']);
      Route::put('editJobDetails/{id}',['as' => 'editJobDetails', 'uses' =>'JobCardController@editJobDetails']);
      Route::put('completeJobCard/{id}',['as' => 'completeJobCard', 'uses' =>'JobCardController@completeJobCard']);
+     Route::put('getCompleteJobCard',['as' => 'getCompleteJobCard', 'uses' =>'JobCardController@getCompleteJobCard']);
 
 
 });
