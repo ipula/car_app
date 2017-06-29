@@ -101,4 +101,16 @@ class ServiceController extends Controller
         $result = DB::select(DB::raw($sql));
         return response()->json(['serviceTypes'=>$result],200);
     }
+
+    public function loadServiceTypesDetails(Request $request)
+    {
+        $data=$request->all();
+        $type=array();
+        for($x=0; $x<count($data); $x++)
+        {
+            $type[$x]=ServiceType::find($data[$x]);
+        }
+
+        return response()->json(["types"=>$type],200);
+    }
 }
