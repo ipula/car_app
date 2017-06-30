@@ -55,18 +55,9 @@ class BrandModelController extends Controller
         $data=$request->all();
         $success=false;
 
-        $brand=Brand::find($data['brand_id']);
-
-        for($x=0; $x<count($data['addedModels']); $x++)
-        {
             $models=new Models();
-            $models->models_name=$data['addedModels'][$x]['models_name'];
+            $models->models_name=$data['models_name'];
             $success=$models->save();
-            if($models->save())
-            {
-                $brand->getModels()->attach(Models::max('models_id'));
-            }
-        }
 
         if($success)
         {
@@ -79,9 +70,9 @@ class BrandModelController extends Controller
 
     }
 
-    public function loadModels($id=null)
+    public function loadModels()
     {
-        $brand=Brand::find($id)->getModels()->get();
-        return response()->json(['models'=>$brand],200);
+        $type=Models::all();
+        return response()->json(["types"=>$type],200);
     }
 }

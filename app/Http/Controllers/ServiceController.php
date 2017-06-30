@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models;
 use App\Service;
 use App\ServiceType;
 use Illuminate\Http\Request;
@@ -94,10 +95,10 @@ class ServiceController extends Controller
         $service=Service::where('service_models_id','=',$id)->get();
         return response()->json(['serviceTypes'=>$service],200);
     }
-    public function loadServiceByModelsBrand($brandId=null,$modelId=null)
+    public function loadServiceByModelsBrand($modelId=null)
     {
 //        $service=Service::where('service_models_id','=',$modelId)->Orwhere('service_brand_id','=',$brandId)->get();
-        $sql='select * from service where service_models_id='."$modelId".' AND service_brand_id='."$brandId";
+        $sql='select * from service where service_models_id='."$modelId";
         $result = DB::select(DB::raw($sql));
         return response()->json(['serviceTypes'=>$result],200);
     }
@@ -113,4 +114,10 @@ class ServiceController extends Controller
 
         return response()->json(["types"=>$type],200);
     }
+//
+//    public function loadModels()
+//    {
+//        $type=Models::all();
+//        return response()->json(["types"=>$type],200);
+//    }
 }

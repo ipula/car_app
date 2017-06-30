@@ -36,7 +36,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
 //    Route::get('getModels',['as' => 'getBrand', 'uses' =>'BrandModelController@getBrand']);
     Route::post('createModels',['as' => 'createModels', 'uses' =>'BrandModelController@createModels']);
 //    Route::put('editModels/{id}',['as' => 'editModels', 'uses' =>'BrandModelController@editModels']);
-    Route::get('loadModels/{id}',['as' => 'loadModels', 'uses' =>'BrandModelController@loadModels']);
+    Route::get('loadModels',['as' => 'loadModels', 'uses' =>'BrandModelController@loadModels']);
 
 //service & service_type routes...........................
     Route::get('getService',['as' => 'getService', 'uses' =>'ServiceController@getService']);
@@ -45,7 +45,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::put('editService/{id}',['as' => 'editService', 'uses' =>'ServiceController@editService']);
     Route::get('loadServiceTypes/{id}',['as' => 'loadServiceTypes', 'uses' =>'ServiceController@loadServiceTypes']);
     Route::get('loadServiceByModels/{id}',['as' => 'loadServiceByModels', 'uses' =>'ServiceController@loadServiceByModels']);
-    Route::get('loadServiceByModelsBrand/{brandId}/{modelId}',['as' => 'loadServiceByModelsBrand', 'uses' =>'ServiceController@loadServiceByModelsBrand']);
+    Route::get('loadServiceByModelsBrand/{modelId}',['as' => 'loadServiceByModelsBrand', 'uses' =>'ServiceController@loadServiceByModelsBrand']);
     Route::post('loadServiceTypesDetails',['as' => 'loadServiceTypesDetails', 'uses' =>'ServiceController@loadServiceTypesDetails']);
 
 //technician routes.......................................
