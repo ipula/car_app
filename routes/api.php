@@ -40,6 +40,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
 
 //service & service_type routes...........................
     Route::get('getService',['as' => 'getService', 'uses' =>'ServiceController@getService']);
+    Route::get('loadService/{id}',['as' => 'getService', 'uses' =>'ServiceController@loadService']);
     Route::post('createService',['as' => 'createService', 'uses' =>'ServiceController@createService']);
     Route::post('createServiceType',['as' => 'createServiceType', 'uses' =>'ServiceController@createServiceType']);
     Route::put('editService/{id}',['as' => 'editService', 'uses' =>'ServiceController@editService']);

@@ -12,7 +12,7 @@ class ServiceController extends Controller
 {
     public function getService()
     {
-        $service=Service::all();
+        $service=Service::with(['getModels'])->get();
         return response()->json(['service'=>$service],200);
     }
 
@@ -62,17 +62,14 @@ class ServiceController extends Controller
 
         $service=Service::find($data['service_id']);
 
-        for($x=0; $x<count($data['addedServiceTypes']); $x++)
-        {
             $serviceTypes=new ServiceType();
-            $serviceTypes->service_type_name=$data['addedServiceTypes'][$x]['service_type_name'];
-            $serviceTypes->service_type_price=$data['addedServiceTypes'][$x]['service_type_price'];
+            $serviceTypes->service_type_name=$data['service_type_name'];
+            $serviceTypes->service_type_price=$data['service_type_price'];
             $success=$serviceTypes->save();
             if($serviceTypes->save())
             {
                 $service->getServiceTypes()->attach(ServiceType::max('service_type_id'));
             }
-        }
 
         if($success)
         {
@@ -87,7 +84,7 @@ class ServiceController extends Controller
 
     public function loadServiceTypes($id=null)
     {
-        $service=Service::find($id)->getServiceTypes()->get();
+        $service=Service::with(['getModels'])->find($id)->getServiceTypes()->get();
         return response()->json(['serviceTypes'=>$service],200);
     }
     public function loadServiceByModels($id=null)
@@ -115,9 +112,9 @@ class ServiceController extends Controller
         return response()->json(["types"=>$type],200);
     }
 //
-//    public function loadModels()
-//    {
-//        $type=Models::all();
-//        return response()->json(["types"=>$type],200);
-//    }
+    public function loadService($id=null)
+    {
+        $service=Service::find($id);
+        return response()->json(["service"=>$service],200);
+    }
 }
