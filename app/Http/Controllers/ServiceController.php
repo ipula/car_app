@@ -117,4 +117,30 @@ class ServiceController extends Controller
         $service=Service::find($id);
         return response()->json(["service"=>$service],200);
     }
+
+    public function loadEditServiceTypes($id=null)
+    {
+        $types=ServiceType::find($id);
+        return response()->json(["types"=>$types],200);
+    }
+
+    public function editServiceType($id=null,Request $request)
+    {
+        $data=$request->all();
+        $success=false;
+
+        $serviceTypes=ServiceType::find($id);
+        $serviceTypes->service_type_name=$data['service_type_name'];
+        $serviceTypes->service_type_price=$data['service_type_price'];
+        $success=$serviceTypes->save();
+
+        if($success)
+        {
+            return response()->json(["msg"=>" Service Type Updated"],200);
+        }
+        else
+        {
+            return response()->json(["msg"=>"Service Type Updated Failed"],500);
+        }
+    }
 }

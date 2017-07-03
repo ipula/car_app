@@ -48,6 +48,8 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::get('loadServiceByModels/{id}',['as' => 'loadServiceByModels', 'uses' =>'ServiceController@loadServiceByModels']);
     Route::get('loadServiceByModelsBrand/{modelId}',['as' => 'loadServiceByModelsBrand', 'uses' =>'ServiceController@loadServiceByModelsBrand']);
     Route::post('loadServiceTypesDetails',['as' => 'loadServiceTypesDetails', 'uses' =>'ServiceController@loadServiceTypesDetails']);
+    Route::get('loadEditServiceTypes/{id}',['as' => 'loadEditServiceTypes', 'uses' =>'ServiceController@loadEditServiceTypes']);
+    Route::put('editServiceType/{id}',['as' => 'editServiceType', 'uses' =>'ServiceController@editServiceType']);
 
 //technician routes.......................................
     Route::get('getTechnician',['as' => 'getTechnician', 'uses' =>'TechnicianController@getTechnician']);
@@ -72,6 +74,15 @@ Route::group(['middleware' => 'jwt.auth'], function () {
      Route::put('editJobDetails/{id}',['as' => 'editJobDetails', 'uses' =>'JobCardController@editJobDetails']);
      Route::put('completeJobCard/{id}',['as' => 'completeJobCard', 'uses' =>'JobCardController@completeJobCard']);
      Route::put('getCompleteJobCard',['as' => 'getCompleteJobCard', 'uses' =>'JobCardController@getCompleteJobCard']);
+
+    //service material.................
+
+    Route::get('getMaterial',['as' => 'getMaterial', 'uses' =>'ServiceMaterialController@getMaterial']);
+    Route::post('addServiceMaterial',['as' => 'addServiceMaterial', 'uses' =>'ServiceMaterialController@addServiceMaterial']);
+    Route::get('loadServiceMaterial/{id}',['as' => 'addServiceMaterial', 'uses' =>'ServiceMaterialController@loadServiceMaterial']);
+    Route::put('editServiceMaterial/{id}',['as' => 'editServiceMaterial', 'uses' =>'ServiceMaterialController@editServiceMaterial']);
+    Route::get('searchServiceMaterial/{name}',['as' => 'searchServiceMaterial', 'uses' =>'ServiceMaterialController@searchServiceMaterial']);
+
 
 
 });
