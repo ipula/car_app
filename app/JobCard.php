@@ -21,4 +21,8 @@ class JobCard extends Model
     {
         return $this->hasMany('App\JobCardDetail','job_card_detail_job_card_id');
     }
+    public function getJobCardMaterial()
+    {
+        return $this->hasMany('App\ServiceMaterialDetail','service_material_detail_job_card_id');
+    }
 }
