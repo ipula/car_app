@@ -83,6 +83,9 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::put('editServiceMaterial/{id}',['as' => 'editServiceMaterial', 'uses' =>'ServiceMaterialController@editServiceMaterial']);
     Route::get('searchServiceMaterial/{name}',['as' => 'searchServiceMaterial', 'uses' =>'ServiceMaterialController@searchServiceMaterial']);
 
+    //invoice....................
+
+    Route::get('getAllInvoice',['as' => 'getAllInvoice', 'uses' =>'InvoiceController@getAllInvoice']);
 
 
 });

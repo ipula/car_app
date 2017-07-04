@@ -70,7 +70,7 @@ class JobCardController extends Controller
 
             if($success)
             {
-                return response()->json(["msg"=>"New Job Card Created"],200);
+                return response()->json(["msg"=>"New Job Card Created","success"=>"true"],200);
             }
             else
             {
