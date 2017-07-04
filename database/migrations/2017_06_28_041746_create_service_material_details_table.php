@@ -17,13 +17,13 @@ class CreateServiceMaterialDetailsTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('service_material_detail_id')->unsigned()->nullable(false);
             $table->integer('service_material_detail_service_material_id')->unsigned()->default(null)->nullable();
-            $table->integer('service_material_detail_job_card_detail_id')->unsigned()->default(null)->nullable();
+            $table->integer('service_material_detail_job_card_id')->unsigned()->default(null)->nullable();
             $table->decimal('service_material_unit_price',10,2)->default(null);
             $table->decimal('service_material_detail_qty',10,2)->default(null);
             $table->timestamps();
 
             $table->foreign('service_material_detail_service_material_id','id_foreign')->references('service_material_id')->on('service_material')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('service_material_detail_job_card_detail_id','id')->references('job_card_detail_id')->on('job_card_detail')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('service_material_detail_job_card_id','id')->references('job_card_id')->on('job_card')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
