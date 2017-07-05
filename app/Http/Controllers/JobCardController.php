@@ -55,17 +55,18 @@ class JobCardController extends Controller
                         $tecDetail->save();
 
                     }
-                for($y=0; $y<count($data['materials']); $y++)
-                {
 
-                    $material=new ServiceMaterialDetail();
-                    $material->service_material_detail_service_material_id=$data['materials'][$y]['service_material_id'];
-                    $material->service_material_detail_job_card_id=JobCard::max('job_card_id');
-                    $material->service_material_unit_price=$data['materials'][$y]['service_material_unit_price'];
-                    $material->service_material_detail_qty=$data['materials'][$y]['service_material_detail_qty'];
-                    $material->save();
+            }
+            for($y=0; $y<count($data['materials']); $y++)
+            {
 
-                }
+                $material=new ServiceMaterialDetail();
+                $material->service_material_detail_service_material_id=$data['materials'][$y]['service_material_id'];
+                $material->service_material_detail_job_card_id=JobCard::max('job_card_id');
+                $material->service_material_unit_price=$data['materials'][$y]['service_material_unit_price'];
+                $material->service_material_detail_qty=$data['materials'][$y]['service_material_detail_qty'];
+                $material->save();
+
             }
 
             if($success)
@@ -130,18 +131,18 @@ class JobCardController extends Controller
                             $tecDetail->save();
                         }
                     }
-                    for($y=0; $y<count($data['materials']); $y++)
-                    {
-
-                        $material=new ServiceMaterialDetail();
-                        $material->service_material_detail_service_material_id=$data['materials'][$y]['service_material_id'];
-                        $material->service_material_detail_job_card_id=$id;
-                        $material->service_material_unit_price=$data['materials'][$y]['service_material_unit_price'];
-                        $material->service_material_detail_qty=$data['materials'][$y]['service_material_detail_qty'];
-                        $material->save();
-
-                    }
                 }
+
+            }
+            for($y=0; $y<count($data['materials']); $y++)
+            {
+
+                $material=new ServiceMaterialDetail();
+                $material->service_material_detail_service_material_id=$data['materials'][$y]['service_material_id'];
+                $material->service_material_detail_job_card_id=$id;
+                $material->service_material_unit_price=$data['materials'][$y]['service_material_unit_price'];
+                $material->service_material_detail_qty=$data['materials'][$y]['service_material_detail_qty'];
+                $material->save();
 
             }
 
