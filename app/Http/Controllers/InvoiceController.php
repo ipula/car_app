@@ -10,7 +10,7 @@ class InvoiceController extends Controller
 {
     public function getAllInvoice()
     {
-        $invoice=Invoice::with(['getJobCard.getVehicle','getUsers'])->get();
+        $invoice=Invoice::with(['getJobCard.getVehicle','getJobCard.getUser','getUsers'])->get();
         return response()->json(['invoice'=>$invoice]);
     }
 

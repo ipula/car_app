@@ -12,7 +12,7 @@ class JobCardController extends Controller
 {
     public function getAllJobCards()
     {
-        $job=JobCard::with(['getVehicle.getBrand','getVehicle.getModel','getUser','getJobCardMaterial'])->get();
+        $job=JobCard::with(['getVehicle.getBrand','getVehicle.getModel','getUser','getJobCardMaterial.getServiceMaterialDetails','getJobCardDetails.getService','getJobCardDetails.getServiceType','getJobCardDetails.getTechnician'])->get();
         return response()->json(["job"=>$job],200);
     }
     public function getUsersJobCards($id=null)
