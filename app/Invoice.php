@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
     protected $table = 'invoice';
-    protected $primaryKey = 'invoice_id';
+    protected $primaryKey = 'invoice_no';
+    public $timestamps=false;
 
     public function getJobCard()
     {
@@ -16,6 +17,6 @@ class Invoice extends Model
 
     public function getUsers()
     {
-        return $this->belongsTo('App\User','invoice_card_users_id');
+        return $this->belongsTo('App\User','invoice_users_id');
     }
 }

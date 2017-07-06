@@ -88,6 +88,8 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     //invoice....................
 
     Route::get('getAllInvoice',['as' => 'getAllInvoice', 'uses' =>'InvoiceController@getAllInvoice']);
+    Route::get('loadInvoiceById/{id}',['as' => 'loadInvoiceById', 'uses' =>'InvoiceController@loadInvoiceById']);
+    Route::post('createInvoice',['as' => 'createInvoice', 'uses' =>'InvoiceController@createInvoice']);
 
 
 });
