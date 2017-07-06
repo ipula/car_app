@@ -20,6 +20,11 @@ class JobCardController extends Controller
         $job=JobCard::with(['getVehicle.getBrand','getVehicle.getModel','getUser'])->where('job_card_users_id','=',$id)->get();
         return response()->json(["job"=>$job],200);
     }
+    public function loadJobCardByVehicle($id=null)
+    {
+        $job=JobCard::with(['getVehicle.getBrand','getVehicle.getModel','getUser'])->where('job_card_vehicle_id','=',$id)->where('job_card_status','=',2)->get();
+        return response()->json(["job"=>$job],200);
+    }
     public function createJobCard(Request $request)
     {
         $success=false;
