@@ -118,56 +118,133 @@ class JobCardController extends Controller
 
                 if($jobCardDetail->save())
                 {
-                    $tec=TechnicianDetail::select('technician_detail_technician_id')->where('technician_detail_job_card_detail_id','=',$data['addedDetail'][$x]['job_card_detail_id'])->get();
+                    $tec=TechnicianDetail::select('technician_detail_technician_id')->where('technician_detail_job_card_detail_id','=',$data['addedDetail'][$x]['job_card_detail_id'])->get()->toArray();
+//                    return response()->json($tec,200);
+//                    for($y=0; $y<count($data['addedDetail'][$x]['technician']); $y++)
+//                    {
+//
+//                        if(in_array($data['addedDetail'][$x]['technician'][$y]['technician_id'],(array) $tec))
+//                        {
+//
+//                        }
+//                        else
+//                        {
+//                            $tecDetail=new TechnicianDetail();
+//                            $tecDetail->technician_detail_job_card_detail_id=$data['addedDetail'][$x]['job_card_detail_id'];
+//                            $tecDetail->technician_detail_technician_id=$data['addedDetail'][$x]['technician'][$y]['technician_id'];
+//                            $tecDetail->save();
+//                        }
+//                    }
 
-                    for($y=0; $y<count($data['addedDetail'][$x]['technician']); $y++)
+                    if(count($tec)<count($data['addedDetail'][$x]['technician']))
                     {
-
-                        if(in_array($data['addedDetail'][$x]['technician'][$y]['technician_id'],$tec))
+                        for($y=0; $y<count($data['addedDetail'][$x]['technician']); $y++)
                         {
-
+                            for($z=$y; $z<count($tec); $z++ )
+                            {
+                                if($tec[$z]=$data['addedDetail'][$x]['technician'][$y]['technician_id'])
+                                {
+                                    $y=$z;
+                                    break;
+                                }
+                                else
+                                {
+                                    $tecDetail=new TechnicianDetail();
+                                    $tecDetail->technician_detail_job_card_detail_id=$data['addedDetail'][$x]['job_card_detail_id'];
+                                    $tecDetail->technician_detail_technician_id=$data['addedDetail'][$x]['technician'][$y]['technician_id'];
+                                    $tecDetail->save();
+                                }
+                            }
                         }
-                        else
+                    }
+                    else
+                    {
+                        for($z=0; $z<count($tec); $z++ )
                         {
-                            $tecDetail=new TechnicianDetail();
-                            $tecDetail->technician_detail_job_card_detail_id=$data['addedDetail'][$x]['job_card_detail_id'];
-                            $tecDetail->technician_detail_technician_id=$data['addedDetail'][$x]['technician'][$y]['technician_id'];
-                            $tecDetail->save();
+                            for ($y = $z; $y < count($data['addedDetail'][$x]['technician']); $y++) {
+
+                                if ($tec[$z] = $data['addedDetail'][$x]['technician'][$y]['technician_id']) {
+                                   $z=$y;
+                                    break;
+                                } else {
+                                    $tecDetail = new TechnicianDetail();
+                                    $tecDetail->technician_detail_job_card_detail_id = $data['addedDetail'][$x]['job_card_detail_id'];
+                                    $tecDetail->technician_detail_technician_id = $data['addedDetail'][$x]['technician'][$y]['technician_id'];
+                                    $tecDetail->save();
+                                }
+
+                            }
+                        }
+                    }
+
+                }
+
+            }
+//            for($y=0; $y<count($data['materials']); $y++)
+//            {
+                $mat=ServiceMaterialDetail::select('service_material_detail_service_material_id')->where('service_material_detail_job_card_id','=',$id)->get();
+
+                if(count($mat)<count($data['materials']))
+                {
+                    for($y=0; $y<count($data['materials']); $y++)
+                    {
+                        for($z=$y; $z<count($mat); $z++ )
+                        {
+                            if($mat[$z]=$data['materials'][$y]['service_material_id'])
+                            {
+
+                                $getMat=ServiceMaterialDetail::where('service_material_detail_service_material_id','=',$data['materials'][$y]['service_material_id'])->where('service_material_detail_job_card_id','=',$id)->first();
+                                $getMat->service_material_unit_price=$data['materials'][$y]['service_material_unit_price'];
+                                $getMat->service_material_detail_qty=$data['materials'][$y]['service_material_detail_qty'];
+                                $getMat->save();
+                                $y=$z;
+                                break;
+                            }
+                            else
+                            {
+                                $material=new ServiceMaterialDetail();
+                                $material->service_material_detail_service_material_id=$data['materials'][$y]['service_material_id'];
+                                $material->service_material_detail_job_card_id=$id;
+                                $material->service_material_unit_price=$data['materials'][$y]['service_material_unit_price'];
+                                $material->service_material_detail_qty=$data['materials'][$y]['service_material_detail_qty'];
+                                $material->save();
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    for($y=0; $y<count($mat); $y++)
+                    {
+                        for($y=$z; $z<count($data['materials']); $y++ )
+                        {
+                            if($mat[$y]=$data['materials'][$z]['service_material_id'])
+                            {
+
+                                $mat[$y]->service_material_unit_price=$data['materials'][$z]['service_material_unit_price'];
+                                $mat[$y]->service_material_detail_qty=$data['materials'][$z]['service_material_detail_qty'];
+                                $mat->save();
+                                $z=$y;
+                                break;
+                            }
+                            else
+                            {
+                                $material=new ServiceMaterialDetail();
+                                $material->service_material_detail_service_material_id=$data['materials'][$z]['service_material_id'];
+                                $material->service_material_detail_job_card_id=$id;
+                                $material->service_material_unit_price=$data['materials'][$z]['service_material_unit_price'];
+                                $material->service_material_detail_qty=$data['materials'][$z]['service_material_detail_qty'];
+                                $material->save();
+                            }
                         }
                     }
                 }
 
-            }
-            for($y=0; $y<count($data['materials']); $y++)
-            {
-                $mat=ServiceMaterialDetail::select('service_material_detail_service_material_id')->where('service_material_detail_job_card_id','=',$id)->get();
-
-//                $material=new ServiceMaterialDetail();
-//                $material->service_material_detail_service_material_id=$data['materials'][$y]['service_material_id'];
-//                $material->service_material_detail_job_card_id=$id;
-//                $material->service_material_unit_price=$data['materials'][$y]['service_material_unit_price'];
-//                $material->service_material_detail_qty=$data['materials'][$y]['service_material_detail_qty'];
-//                $material->save();
-
-                if(in_array($data['materials'][$y]['service_material_id'],$mat))
-                {
-
-                }
-                else
-                {
-                    $material=new ServiceMaterialDetail();
-                    $material->service_material_detail_service_material_id=$data['materials'][$y]['service_material_id'];
-                    $material->service_material_detail_job_card_id=$id;
-                    $material->service_material_unit_price=$data['materials'][$y]['service_material_unit_price'];
-                    $material->service_material_detail_qty=$data['materials'][$y]['service_material_detail_qty'];
-                    $material->save();
-                }
-
-            }
+//            }
 
             if($success)
             {
-                return response()->json(["msg"=>"Job Updated"],500);
+                return response()->json(["msg"=>"Job Updated"],200);
             }
             else
             {
