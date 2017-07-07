@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models;
+use App\ModelServicePrice;
 use App\Service;
 use App\ServiceType;
 use Illuminate\Http\Request;
@@ -10,19 +11,21 @@ use Illuminate\Support\Facades\DB;
 
 class ServiceController extends Controller
 {
+    ///changed...........
     public function getService()
     {
-        $service=Service::with(['getModels'])->get();
+//        $service=Service::with(['getModels'])->get();
+        $service=ModelServicePrice::with(['getModels','getService'])->get();
         return response()->json(['service'=>$service],200);
     }
-
+//changed...
     public function createService(Request $request)
     {
         $data=$request->all();
         $service= new Service();
         $service->service_name=$data['service_name'];
         $service->service_price=$data['service_price'];
-        $service->service_models_id=$data['service_models_id'];
+//        $service->service_models_id=$data['service_models_id'];
         $service->save();
 
         if($service->save())
@@ -141,6 +144,45 @@ class ServiceController extends Controller
         else
         {
             return response()->json(["msg"=>"Service Type Updated Failed"],500);
+        }
+    }
+//changed........................
+    public function addPrice(Request $request)
+    {
+        $data=$request->all();
+
+        $service=new Service();
+        $service->service_name=$data['service_name'];
+        $service->save();
+
+        $modelServicePrice=new ModelServicePrice();
+        $modelServicePrice->model_service_price_model_id=$data['model_id'];
+        $modelServicePrice->model_service_price_service_id=$data['service_id'];
+        $modelServicePrice->model_service_price_service_id=$data['price'];
+        $modelServicePrice->save();
+        if($modelServicePrice->save())
+        {
+            return response()->json(["msg"=>" Service Price Added"],200);
+        }
+        else
+        {
+            return response()->json(["msg"=>"Service Price Added Failed"],500);
+        }
+    }
+    //changed........................
+    public function addEditPrice($id=null,Request $request)
+    {
+        $data=$request->all();
+        $modelServicePrice=ModelServicePrice::find($id);
+        $modelServicePrice->model_service_price_price=$data['price'];
+        $modelServicePrice->save();
+        if($modelServicePrice->save())
+        {
+            return response()->json(["msg"=>" Service Price updated"],200);
+        }
+        else
+        {
+            return response()->json(["msg"=>"Service Price updated Failed"],500);
         }
     }
 }
