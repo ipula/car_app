@@ -48,13 +48,13 @@ class InvoiceController extends Controller
             {
                 $payment=new InvoicePayment();
                 $payment->payment_invoice_no=Invoice::max('invoice_no');
-                $payment->payment_type=1;
+                $payment->payment_type=2;
                 $payment->payment_amount=$data['addedCardPayments'][$x]['card_total'];
                 $payment->payment_detail='CARD';
                 $payment->payment_effective_date=date('Y-m-d');
                 $payment->payment_bank=$data['addedCardPayments'][$x]['bank'];
 //                $payment->payment_note=$data['cardPayments'][$x]['payment_note'];
-                $payment->payment_receipt_no=$data['cardPayments'][$x]['transaction_id'];
+                $payment->payment_receipt_no=$data['addedCardPayments'][$x]['transaction_id'];
                 $payment->payment_customer_id=$data['vehicle_id'];
                 $payment->save();
             }
@@ -62,13 +62,13 @@ class InvoiceController extends Controller
             {
                 $payment=new InvoicePayment();
                 $payment->payment_invoice_no=Invoice::max('invoice_no');
-                $payment->payment_type=1;
-                $payment->payment_amount=$data['addedChequePayments'][$x]['date'];
+                $payment->payment_type=3;
+                $payment->payment_amount=$data['addedChequePayments'][$x]['cheque_total'];
                 $payment->payment_detail='CHEQUE';
-                $payment->payment_effective_date=$data['addedChequePayments'][$x]['bank'];
+                $payment->payment_effective_date=$data['addedChequePayments'][$x]['date'];
                 $payment->payment_bank=$data['addedChequePayments'][$x]['bank'];
 //                $payment->payment_note=$data['chequePayments'][$x]['payment_note'];
-                $payment->payment_receipt_no=$data['chequePayments'][$x]['cheque_no'];
+                $payment->payment_receipt_no=$data['addedChequePayments'][$x]['cheque_no'];
                 $payment->payment_customer_id=$data['vehicle_id'];
                 $payment->save();
             }
