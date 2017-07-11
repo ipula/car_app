@@ -181,7 +181,7 @@ class JobCardController extends Controller
 
         if($job->save())
         {
-            return response()->json(["msg"=>"Job Card Complete"],500);
+            return response()->json(["msg"=>"Job Card Complete"],200);
         }
         else
         {
@@ -192,6 +192,6 @@ class JobCardController extends Controller
     public function getCompleteJobCard()
     {
         $jobCard=JobCard::with(['getVehicle.getBrand','getVehicle.getModel','getUser'])->where('job_card_status','=',2)->get();
-        return response()->json(['jobCard'=>$jobCard]);
+        return response()->json(['jobCard'=>$jobCard],200);
     }
 }
