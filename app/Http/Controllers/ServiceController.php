@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models;
 use App\ModelServicePrice;
 use App\Service;
+use App\ServiceService;
 use App\ServiceType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -63,16 +64,22 @@ class ServiceController extends Controller
         $data=$request->all();
         $success=false;
 
-        $service=Service::find($data['service_id']);
+//        $service=Service::find($data['service_id']);
+//
+//            $serviceTypes=new ServiceType();
+//            $serviceTypes->service_type_name=$data['service_type_name'];
+//            $serviceTypes->service_type_price=$data['service_type_price'];
+//            $success=$serviceTypes->save();
+//            if($serviceTypes->save())
+//            {
+//                $service->getServiceTypes()->attach(ServiceType::max('service_type_id'));
+//            }
 
-            $serviceTypes=new ServiceType();
-            $serviceTypes->service_type_name=$data['service_type_name'];
-            $serviceTypes->service_type_price=$data['service_type_price'];
-            $success=$serviceTypes->save();
-            if($serviceTypes->save())
-            {
-                $service->getServiceTypes()->attach(ServiceType::max('service_type_id'));
-            }
+        $service=new ServiceService();
+        $service->service_service_service_id=$data['service_id'];
+        $service->service_service_type_id=$data['service_type_id'];
+        $success=$service->save();
+
 
         if($success)
         {
@@ -97,10 +104,10 @@ class ServiceController extends Controller
     }
     public function loadServiceByModelsBrand($modelId=null)
     {
-//        $service=Service::where('service_models_id','=',$modelId)->Orwhere('service_brand_id','=',$brandId)->get();
-        $sql='select * from service where service_models_id='."$modelId";
-        $result = DB::select(DB::raw($sql));
-        return response()->json(['serviceTypes'=>$result],200);
+        $service=ModelServicePrice::with(['getService'])->where('model_service_price_model_id','=',$modelId)->get();
+//        $sql='select * from service where service_models_id='."$modelId";
+//        $result = DB::select(DB::raw($sql));
+        return response()->json(['serviceTypes'=>$service],200);
     }
 
     public function loadServiceTypesDetails(Request $request)
@@ -117,7 +124,8 @@ class ServiceController extends Controller
 //
     public function loadService($id=null)
     {
-        $service=Service::find($id);
+//        $service=Service::find($id);
+        $service=ModelServicePrice::with(['getModels','getService'])->find($id);
         return response()->json(["service"=>$service],200);
     }
 
@@ -156,9 +164,9 @@ class ServiceController extends Controller
         $service->save();
 
         $modelServicePrice=new ModelServicePrice();
-        $modelServicePrice->model_service_price_model_id=$data['model_id'];
-        $modelServicePrice->model_service_price_service_id=$data['service_id'];
-        $modelServicePrice->model_service_price_service_id=$data['price'];
+        $modelServicePrice->model_service_price_model_id=$data['service_models_id'];
+        $modelServicePrice->model_service_price_service_id=Service::max('service_id');
+        $modelServicePrice->model_service_price=$data['service_price'];
         $modelServicePrice->save();
         if($modelServicePrice->save())
         {
@@ -174,7 +182,7 @@ class ServiceController extends Controller
     {
         $data=$request->all();
         $modelServicePrice=ModelServicePrice::find($id);
-        $modelServicePrice->model_service_price_price=$data['price'];
+        $modelServicePrice->model_service_price=$data['model_service_price'];
         $modelServicePrice->save();
         if($modelServicePrice->save())
         {
