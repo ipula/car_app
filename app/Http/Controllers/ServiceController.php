@@ -171,6 +171,7 @@ class ServiceController extends Controller
 
         $service=new Service();
         $service->service_name=$data['service_name'];
+        $service->service_category=$data['service_category'];
         $service->save();
 
         $modelServicePrice=new ModelServicePrice();
