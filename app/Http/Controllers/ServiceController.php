@@ -94,12 +94,22 @@ class ServiceController extends Controller
 
     public function loadServiceTypes($id=null)
     {
-        $service=Service::with(['getModels'])->find($id)->getServiceTypes()->get();
-        return response()->json(['serviceTypes'=>$service],200);
+        $data=array();
+//        $service=Service::with(['getModels'])->find($id)->getServiceTypes()->get();
+        $service=ServiceService::where('service_service_service_id','=',$id)->get();
+
+        for($x=0; $x< count($service); $x++)
+        {
+            $data[$x]=Service::where('service_id','=',$service[$x]['service_service_type_id'])->get();
+
+        }
+
+        return response()->json(['serviceTypes'=>$data],200);
     }
     public function loadServiceByModels($id=null)
     {
-        $service=Service::where('service_models_id','=',$id)->get();
+//        $service=Service::where('service_models_id','=',$id)->get();
+        $service=ModelServicePrice::where('model_service_price_model_id','=',$id)->get();
         return response()->json(['serviceTypes'=>$service],200);
     }
     public function loadServiceByModelsBrand($modelId=null)

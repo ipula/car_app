@@ -12,7 +12,7 @@ class JobCardController extends Controller
 {
     public function getAllJobCards()
     {
-        $job=JobCard::with(['getVehicle.getBrand','getVehicle.getModel','getUser','getJobCardMaterial.getMaterial','getJobCardDetails.getService','getJobCardDetails.getServiceType','getJobCardDetails.getTechnician.techData'])->get();
+        $job=JobCard::with(['getVehicle.getBrand','getVehicle.getModel','getUser','getJobCardMaterial.getMaterial','getJobCardDetails.getService','getJobCardDetails.getTechnician.techData'])->get();
         return response()->json(["job"=>$job],200);
     }
     public function getUsersJobCards($id=null)
@@ -45,7 +45,7 @@ class JobCardController extends Controller
                 $jobCardDetail=new JobCardDetail();
                 $jobCardDetail->job_card_detail_job_card_id=JobCard::max('job_card_id');
                 $jobCardDetail->job_card_detail_service_id=$data['addedDetail'][$x]['job_card_detail_service_id'];
-                $jobCardDetail->job_card_detail_service_type_id=$data['addedDetail'][$x]['job_card_detail_service_type_id'];
+                $jobCardDetail->job_card_detail_category=$data['addedDetail'][$x]['job_card_detail_category'];
                 $jobCardDetail->job_card_detail_comment=$data['addedDetail'][$x]['job_card_detail_comment'];
                 $jobCardDetail->job_card_detail_status=0;
                 $jobCardDetail->job_card_detail_quantity=$data['addedDetail'][$x]['job_card_detail_quantity'];
@@ -115,8 +115,8 @@ class JobCardController extends Controller
                         $jobCardDetail = new JobCardDetail();
                     }
                         $jobCardDetail->job_card_detail_service_id = $data['addedDetail'][$x]['job_card_detail_service_id'];
-                        $jobCardDetail->job_card_detail_service_type_id = $data['addedDetail'][$x]['job_card_detail_service_type_id'];
                         $jobCardDetail->job_card_detail_comment = $data['addedDetail'][$x]['job_card_detail_comment'];
+                        $jobCardDetail->job_card_detail_category = $data['addedDetail'][$x]['job_card_detail_category'];
                         $jobCardDetail->job_card_detail_status = $data['addedDetail'][$x]['job_card_detail_status'];
                         $jobCardDetail->job_card_detail_quantity = $data['addedDetail'][$x]['job_card_detail_quantity'];
                         $jobCardDetail->job_card_detail_unit_price = $data['addedDetail'][$x]['job_card_detail_unit_price'];
