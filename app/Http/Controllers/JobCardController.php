@@ -100,6 +100,7 @@ class JobCardController extends Controller
     {
         $data=$request->all();
         $onGoing=JobCard::find($id);
+        $onGoing->job_card_total=$data['job_card_total'];
         $onGoing->job_card_status=1;
         $onGoing->save();
         if($onGoing->save())
@@ -109,12 +110,6 @@ class JobCardController extends Controller
                     if (isset($data['addedDetail'][$x]['job_card_detail_id']))
                     {
                         $jobCardDetail = JobCardDetail::find($data['addedDetail'][$x]['job_card_detail_id']);
-                    }
-                    else
-                    {
-                        $jobCardDetail = new JobCardDetail();
-                        $jobCardDetail->job_card_detail_job_card_id = $id;
-                    }
                         $jobCardDetail->job_card_detail_service_id = $data['addedDetail'][$x]['job_card_detail_service_id'];
                         $jobCardDetail->job_card_detail_comment = $data['addedDetail'][$x]['job_card_detail_comment'];
                         $jobCardDetail->job_card_detail_category = $data['addedDetail'][$x]['job_card_detail_category'];
@@ -127,7 +122,7 @@ class JobCardController extends Controller
                             for ($z = 0; $z < count($data['addedDetail'][$x]['technician']); $z++) {
                                 $tec = TechnicianDetail::where('technician_detail_technician_id', '=', $data['addedDetail'][$x]['technician'][$z]['technician_id'])->where('technician_detail_job_card_detail_id', '=', $data['addedDetail'][$x]['job_card_detail_id'])->first();
                                 if (empty($tec)) {
-        //                            return response()->json("ok",200);
+                                    //                            return response()->json("ok",200);
                                     $tecDetail = new TechnicianDetail();
                                     $tecDetail->technician_detail_job_card_detail_id = $data['addedDetail'][$x]['job_card_detail_id'];
                                     $tecDetail->technician_detail_technician_id = $data['addedDetail'][$x]['technician'][$z]['technician_id'];
@@ -136,6 +131,32 @@ class JobCardController extends Controller
                             }
 
                         }
+                    }
+                    else
+                    {
+                        $jobCardDetail = new JobCardDetail();
+                        $jobCardDetail->job_card_detail_job_card_id = $id;
+                        $jobCardDetail->job_card_detail_service_id = $data['addedDetail'][$x]['job_card_detail_service_id'];
+                        $jobCardDetail->job_card_detail_comment = $data['addedDetail'][$x]['job_card_detail_comment'];
+                        $jobCardDetail->job_card_detail_category = $data['addedDetail'][$x]['job_card_detail_category'];
+                        $jobCardDetail->job_card_detail_status = $data['addedDetail'][$x]['job_card_detail_status'];
+                        $jobCardDetail->job_card_detail_quantity = $data['addedDetail'][$x]['job_card_detail_quantity'];
+                        $jobCardDetail->job_card_detail_unit_price = $data['addedDetail'][$x]['job_card_detail_unit_price'];
+                        $success = $jobCardDetail->save();
+
+                        if ($jobCardDetail->save())
+                        {
+                            for ($z = 0; $z < count($data['addedDetail'][$x]['technician']); $z++) {
+                                    $tecDetail = new TechnicianDetail();
+                                    $tecDetail->technician_detail_job_card_detail_id = JobCardDetail::max('job_card_detail_id');
+                                    $tecDetail->technician_detail_technician_id = $data['addedDetail'][$x]['technician'][$z]['technician_id'];
+                                    $tecDetail->save();
+
+                            }
+
+                        }
+                    }
+
 
             }
             for($y=0; $y<count($data['materials']); $y++) {
