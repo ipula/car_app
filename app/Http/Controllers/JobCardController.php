@@ -109,16 +109,12 @@ class JobCardController extends Controller
                     if (isset($data['addedDetail'][$x]['job_card_detail_id']))
                     {
                         $jobCardDetail = JobCardDetail::find($data['addedDetail'][$x]['job_card_detail_id']);
-                        $jobCardDetail->job_card_detail_comment = $data['addedDetail'][$x]['job_card_detail_comment'];
-                        $jobCardDetail->job_card_detail_category = $data['addedDetail'][$x]['job_card_detail_category'];
-                        $jobCardDetail->job_card_detail_status = $data['addedDetail'][$x]['job_card_detail_status'];
-                        $jobCardDetail->job_card_detail_quantity = $data['addedDetail'][$x]['job_card_detail_quantity'];
-                        $jobCardDetail->job_card_detail_unit_price = $data['addedDetail'][$x]['job_card_detail_unit_price'];
-                        $success = $jobCardDetail->save();
                     }
                     else
                     {
                         $jobCardDetail = new JobCardDetail();
+                        $jobCardDetail->job_card_detail_job_card_id = $id;
+                    }
                         $jobCardDetail->job_card_detail_service_id = $data['addedDetail'][$x]['job_card_detail_service_id'];
                         $jobCardDetail->job_card_detail_comment = $data['addedDetail'][$x]['job_card_detail_comment'];
                         $jobCardDetail->job_card_detail_category = $data['addedDetail'][$x]['job_card_detail_category'];
@@ -126,9 +122,6 @@ class JobCardController extends Controller
                         $jobCardDetail->job_card_detail_quantity = $data['addedDetail'][$x]['job_card_detail_quantity'];
                         $jobCardDetail->job_card_detail_unit_price = $data['addedDetail'][$x]['job_card_detail_unit_price'];
                         $success = $jobCardDetail->save();
-                    }
-
-
 
                         if ($jobCardDetail->save()) {
                             for ($z = 0; $z < count($data['addedDetail'][$x]['technician']); $z++) {
