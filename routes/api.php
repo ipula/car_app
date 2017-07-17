@@ -96,5 +96,11 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::get('loadInvoiceById/{id}',['as' => 'loadInvoiceById', 'uses' =>'InvoiceController@loadInvoiceById']);
     Route::post('createInvoice',['as' => 'createInvoice', 'uses' =>'InvoiceController@createInvoice']);
 
+    //Grn.........................
+
+    Route::get('getGrn',['as' => 'getGrn', 'uses' =>'GrnController@getGrn']);
+    Route::get('getGrnDetail/{id}',['as' => 'getGrnDetail', 'uses' =>'GrnController@getGrnDetail']);
+
+
 
 });
