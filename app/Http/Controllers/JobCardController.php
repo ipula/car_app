@@ -213,7 +213,7 @@ class JobCardController extends Controller
 
     public function getCompleteJobCard()
     {
-        $jobCard=JobCard::with(['getVehicle.getBrand','getVehicle.getModel','getUser'])->where('job_card_status','=',2)->get();
+        $jobCard=JobCard::with(['getVehicle.getBrand','getVehicle.getModel','getUser','getJobCardMaterial.getMaterial','getJobCardDetails.getService','getJobCardDetails.getServiceType','getJobCardDetails.getTechnician.techData'])->where('job_card_status','=',2)->get();
         return response()->json(['jobCard'=>$jobCard],200);
     }
 }
