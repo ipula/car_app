@@ -99,6 +99,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     //Grn.........................
 
     Route::get('getGrn',['as' => 'getGrn', 'uses' =>'GrnController@getGrn']);
+    Route::post('createGrn',['as' => 'createGrn', 'uses' =>'GrnController@createGrn']);
     Route::get('getGrnDetail/{id}',['as' => 'getGrnDetail', 'uses' =>'GrnController@getGrnDetail']);
 
 

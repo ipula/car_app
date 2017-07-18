@@ -25,11 +25,12 @@ class GrnController extends Controller
         $grn= new Grn();
         $grn->grn_date=date('Y-m-d');
         $grn->grn_time=date('H:i:s');
-        $grn->grn_no_of_items=$data['grnAggregateData']['grn_no_of_items'];
-        $grn->grn_sup_id=$data['supplier']['supplier_id'];
+        $grn->grn_no_of_items=$data['itemAggregateData']['no_of_items'];
+        $grn->grn_sup_id=1;
+//        $grn->grn_sup_id=$data['supplier']['supplier_id'];
         $grn->grn_users_id=Auth::user()->id;
-        $grn->grn_discount=$data['discount'];
-        $grn->grn_total=$data['grnAggregateData']['grn_total']-($data['grnAggregateData']['grn_total']*($data['discount']/100));
+        $grn->grn_discount=$data['grnData']['discount'];
+        $grn->grn_total=$data['itemAggregateData']['total_amount']-($data['itemAggregateData']['total_amount']*($data['grnData']['discount']/100));
         $grn->save();
 
         if($grn->save())
@@ -38,6 +39,7 @@ class GrnController extends Controller
             {
                 $newGRNDetail=new GrnDetail();
                 $newGRNDetail->grn_detail_service_material_id = $item['service_material']['service_material_id'];
+                $newGRNDetail->grn_detail_grn_id =Grn::max('grn_id');
                 $newGRNDetail->grn_detail_qty = $item['grn_detail_qty'];
                 $newGRNDetail->grn_detail_qty_string = $item['grn_detail_qty'];
                 $newGRNDetail->grn_detail_unit = $item['grn_detail_unit'];
