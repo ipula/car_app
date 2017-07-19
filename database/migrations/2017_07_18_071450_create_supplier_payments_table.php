@@ -13,10 +13,10 @@ class CreateSupplierPaymentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('supplier_payments', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
-        });
+//        Schema::create('supplier_payments', function (Blueprint $table) {
+//            $table->increments('id');
+//            $table->timestamps();
+//        });
     }
 
     /**
@@ -26,6 +26,6 @@ class CreateSupplierPaymentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('supplier_payments');
+//        Schema::dropIfExists('supplier_payments');
     }
 }
