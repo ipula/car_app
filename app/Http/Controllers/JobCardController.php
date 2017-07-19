@@ -178,6 +178,14 @@ class JobCardController extends Controller
                     $material->save();
                 }
             }
+            for($y=0; $y<count($data['deletedDetails']); $y++) {
+                $detail = JobCardDetail::find($data['deletedDetails'][$y]);
+                $detail->delete();
+            }
+            for($y=0; $y<count($data['deletedMaterials']); $y++) {
+                $detail = ServiceMaterialDetail::find($data['deletedMaterials'][$y]);
+                $detail->delete();
+            }
             if($success)
             {
                 return response()->json(["msg"=>"Job Updated"],200);
