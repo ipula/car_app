@@ -102,6 +102,13 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::post('createGrn',['as' => 'createGrn', 'uses' =>'GrnController@createGrn']);
     Route::get('getGrnDetail/{id}',['as' => 'getGrnDetail', 'uses' =>'GrnController@getGrnDetail']);
 
+    //supplier............
+
+    Route::get('getSupplier',['as' => 'getSupplier', 'uses' =>'SupplierController@getSupplier']);
+    Route::post('createSupplier',['as' => 'createSupplier', 'uses' =>'SupplierController@createSupplier']);
+    Route::get('loadSupplier/{id}',['as' => 'loadSupplier', 'uses' =>'SupplierController@loadSupplier']);
+    Route::put('editSupplier/{id}',['as' => 'editSupplier', 'uses' =>'SupplierController@editSupplier']);
+    Route::get('searchSupplier/{name}',['as' => 'searchSupplier', 'uses' =>'SupplierController@searchSupplier']);
 
 
 });
