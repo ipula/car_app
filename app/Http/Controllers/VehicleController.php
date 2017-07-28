@@ -9,9 +9,9 @@ class VehicleController extends Controller
 {
     public function getVehicle(Request $request)
     {
-        if(isset($request['page']))
+        if(isset($request['page']) &&$request['page']!=0)
         {
-            $vehicle=Vehicle::with(['getBrand','getModel'])->paginate(1);
+            $vehicle=Vehicle::with(['getBrand','getModel'])->paginate(10);
             return response()->json(["vehicle"=>$vehicle],200);
 
         }

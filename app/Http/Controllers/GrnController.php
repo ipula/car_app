@@ -12,7 +12,7 @@ class GrnController extends Controller
 {
     public function getGrn()
     {
-        $grn=Grn::with(['getGrnDetail.getServiceMaterial','getSupplier'])->get();
+        $grn=Grn::with(['getGrnDetail.getServiceMaterial','getSupplier'])->paginate(1);
         return response()->json(['grn'=>$grn],200);
 
     }

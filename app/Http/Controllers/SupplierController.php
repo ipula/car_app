@@ -36,9 +36,9 @@ class SupplierController extends Controller
 
     public function getSupplier(Request $request)
     {
-        if(isset($request['page']))
+        if(isset($request['page']) && $request['page']!=0)
         {
-            $supplier=Supplier::paginate(10);
+            $supplier=Supplier::paginate(1);
         }
         else
         {
