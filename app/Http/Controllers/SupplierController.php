@@ -34,9 +34,18 @@ class SupplierController extends Controller
         return response()->json(["supplier"=>$supplier],200);
     }
 
-    public function getSupplier()
+    public function getSupplier(Request $request)
     {
-        $supplier=Supplier::all();
+        if(isset($request['page']))
+        {
+            $supplier=Supplier::paginate(10);
+        }
+        else
+        {
+            $supplier=Supplier::all();
+        }
+
+//        return response()->json(["supplier"=>$request['page']],200);
         return response()->json(["supplier"=>$supplier],200);
     }
 
@@ -56,7 +65,7 @@ class SupplierController extends Controller
         }
         else
         {
-            return response()->json(["msg"=>"Supplier Updated"],500);
+            return response()->json(["msg"=>"Supplier Update Failed"],500);
         }
     }
 

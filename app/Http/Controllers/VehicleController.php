@@ -7,10 +7,20 @@ use Illuminate\Http\Request;
 
 class VehicleController extends Controller
 {
-    public function getVehicle()
+    public function getVehicle(Request $request)
     {
-        $vehicle=Vehicle::with(['getBrand','getModel'])->get();
-        return response()->json(["vehicle"=>$vehicle],200);
+        if(isset($request['page']))
+        {
+            $vehicle=Vehicle::with(['getBrand','getModel'])->paginate(1);
+            return response()->json(["vehicle"=>$vehicle],200);
+
+        }
+        else
+        {
+            $vehicle=Vehicle::with(['getBrand','getModel'])->get()
+            ;return response()->json(["vehicle"=>$vehicle],200);
+        }
+
     }
 
     public function createVehicle(Request $request)
