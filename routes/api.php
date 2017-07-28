@@ -110,5 +110,11 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::put('editSupplier/{id}',['as' => 'editSupplier', 'uses' =>'SupplierController@editSupplier']);
     Route::get('searchSupplier/{name}',['as' => 'searchSupplier', 'uses' =>'SupplierController@searchSupplier']);
 
+    //current stock...........
+
+
+    Route::get('getStock',['as' => 'getStock', 'uses' =>'StockController@getStock']);
+    Route::get('searchStock/{name}',['as' => 'searchStock', 'uses' =>'StockController@searchStock']);
+
 
 });

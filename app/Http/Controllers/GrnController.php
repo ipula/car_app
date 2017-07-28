@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Grn;
 use App\GrnDetail;
+use App\GrnPayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -46,6 +47,39 @@ class GrnController extends Controller
                 $newGRNDetail->grn_detail_pur_unit_price = $item['grn_detail_pur_unit_price'];
                 $newGRNDetail->grn_detail_type =1;
                 $newGRNDetail->save();
+            }
+            foreach ($data['addedCardPayments'] as $card)
+            {
+                $newGrnPayment=new GrnPayment();
+                $newGrnPayment->grn_payment_grn_id=Grn::max('grn_id');
+                $newGrnPayment->grn_payment_type=2;
+                $newGrnPayment->grn_payment_amount=$card['card_total'];
+//                $newGrnPayment->grn_payment_effective_date=date('Y-m-d');
+                $newGrnPayment->grn_payment_bank=$card['bank'];
+                $newGrnPayment->grn_payment_note=$card['transaction_id'];
+                $newGrnPayment->save();
+            }
+            foreach ($data['addedCashPayments'] as $cash)
+            {
+                $newGrnPayment=new GrnPayment();
+                $newGrnPayment->grn_payment_grn_id=Grn::max('grn_id');
+                $newGrnPayment->grn_payment_type=2;
+                $newGrnPayment->grn_payment_amount=$cash['cash_amount'];
+//                $newGrnPayment->grn_payment_effective_date=date('Y-m-d');
+//                $newGrnPayment->grn_payment_bank=
+//                $newGrnPayment->grn_payment_note=
+                $newGrnPayment->save();
+            }
+            foreach ($data['addedChequePayments'] as $cheque)
+            {
+                $newGrnPayment=new GrnPayment();
+                $newGrnPayment->grn_payment_grn_id=Grn::max('grn_id');
+                $newGrnPayment->grn_payment_type=3;
+                $newGrnPayment->grn_payment_amount=$cheque['cheque_total'];
+                $newGrnPayment->grn_payment_effective_date=$cheque['date'];
+                $newGrnPayment->grn_payment_bank=$cheque['bank'];
+                $newGrnPayment->grn_payment_note=$cheque['cheque_no'];
+                $newGrnPayment->save();
             }
             return response()->json("Grn Added Success",200);
         }
