@@ -12,7 +12,7 @@ class GrnController extends Controller
 {
     public function getGrn()
     {
-        $grn=Grn::with(['getGrnDetail.getServiceMaterial','getSupplier'])->paginate(1);
+        $grn=Grn::with(['getGrnDetail.getServiceMaterial','getSupplier'])->paginate(10);
         return response()->json(['grn'=>$grn],200);
 
     }
@@ -27,8 +27,8 @@ class GrnController extends Controller
         $grn->grn_date=date('Y-m-d');
         $grn->grn_time=date('H:i:s');
         $grn->grn_no_of_items=$data['itemAggregateData']['no_of_items'];
-        $grn->grn_sup_id=1;
-//        $grn->grn_sup_id=$data['supplier']['supplier_id'];
+//        $grn->grn_sup_id=1;
+        $grn->grn_sup_id=$data['supplier']['supplier_id'];
         $grn->grn_users_id=Auth::user()->id;
         $grn->grn_discount=$data['grnData']['discount'];
         $grn->grn_total=$data['itemAggregateData']['total_amount']-($data['itemAggregateData']['total_amount']*($data['grnData']['discount']/100));

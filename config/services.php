@@ -15,8 +15,8 @@ return [
     */
 
     'mailgun' => [
-        'domain' => env('MAILGUN_DOMAIN'),
-        'secret' => env('MAILGUN_SECRET'),
+        'domain' => 'pos.geniussoft.lk',
+        'secret' => 'key-0d25cb61a1714ae623f4127ec4f4cda5',
     ],
 
     'ses' => [
@@ -25,9 +25,9 @@ return [
         'region' => 'us-east-1',
     ],
 
-    'sparkpost' => [
-        'secret' => env('SPARKPOST_SECRET'),
-    ],
+//    'sparkpost' => [
+//        'secret' => '75346b752667fc43e797f3b3f35ca8fd5101f9a2',
+//    ],
 
     'stripe' => [
         'model' => App\User::class,

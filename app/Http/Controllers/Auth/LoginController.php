@@ -109,7 +109,7 @@ class LoginController extends Controller
     public function getUsers()
     {
 
-        $user=User::all();
+        $user=User::paginate(10);
         return response()->json(["users"=>$user],200);
 
     }

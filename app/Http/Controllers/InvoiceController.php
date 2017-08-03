@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Invoice;
 use App\InvoicePayment;
+use App\JobCard;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -31,8 +32,13 @@ class InvoiceController extends Controller
         $invoice->invoice_users_id=$data['job_card_id']['get_user']['id'];
         $invoice->save();
 
+
         if($invoice->save())
         {
+            $jobcard=JobCard::find($data['job_card_id']['job_card_id']);
+            $jobcard->job_card_status=3;
+            $jobcard->save();
+
             for($x=0; $x<count($data['addedCashPayments']); $x++)
             {
                 $payment=new InvoicePayment();

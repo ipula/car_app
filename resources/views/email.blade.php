@@ -1,0 +1,1 @@
+<html><body><h1>Congratulations</h1><p>You just sent your very first mailing!</p></body></html>

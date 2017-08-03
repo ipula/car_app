@@ -2,14 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Account;
 use App\Technician;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class TechnicianController extends Controller
 {
     public function getTechnician()
     {
-        $technician=Technician::all();
+        if(isset($request['page']) && $request['page']!=0) {
+            $technician=Technician::paginate(10);
+        }
+        else
+        {
+            $technician=Technician::paginate(10);
+        }
         return response()->json(["technician"=>$technician],200);
     }
 
@@ -27,6 +35,12 @@ class TechnicianController extends Controller
 
         if($technician->save())
         {
+//            Mail::to('ipularanasinghe007@gmail.com')->send(new Account);
+//            $data = []; // Empty array
+//            Mail::send('email',$data, function($message) {
+//                $message->to('ipularanasinghe007@gmail.com');
+////                $message->subject('Mailgun Testing');
+//            });
             return response()->json(["msg"=>"New Technician Created"],200);
         }
         else

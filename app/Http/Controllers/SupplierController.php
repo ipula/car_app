@@ -38,7 +38,7 @@ class SupplierController extends Controller
     {
         if(isset($request['page']) && $request['page']!=0)
         {
-            $supplier=Supplier::paginate(1);
+            $supplier=Supplier::paginate(10);
         }
         else
         {
