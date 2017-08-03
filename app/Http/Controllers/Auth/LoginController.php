@@ -144,7 +144,7 @@ class LoginController extends Controller
 
     public function loadUser($id=null)
     {
-        $user=User::findorfail($id)->first();
+        $user=User::find($id);
         return response()->json(["users"=>$user],200);
     }
 }
