@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Invoice;
 use App\Models;
 use App\ModelServicePrice;
 use App\Service;
@@ -204,4 +205,20 @@ class ServiceController extends Controller
             return response()->json(["msg"=>"Service Price updated Failed"],500);
         }
     }
+
+    public function totalServiceIncome()
+    {
+        $total='select sum(invoice_total-((invoice_total*invoice_discount_rate)/100)) as invoice_total, invoice_date from invoice group by invoice_date DESC LIMIT 8';
+        $result = DB::select(DB::raw($total));
+
+        $data=array(array());
+        for ($x=0; $x<count($result); $x++)
+        {
+            $data[$x]['name']=$result[$x]->invoice_date;
+//            $data[$x]['name']="test";
+            $data[$x]['value']=(double)$result[$x]->invoice_total;
+        }
+        return response()->json($data,200);
+    }
+
 }

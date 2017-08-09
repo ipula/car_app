@@ -32,7 +32,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::post('createBrand',['as' => 'createBrand', 'uses' =>'BrandModelController@createBrand']);
     Route::put('editBrand/{id}',['as' => 'editBrand', 'uses' =>'BrandModelController@editBrand']);
 
-//models routys..........................................
+//models routes..........................................
 //    Route::get('getModels',['as' => 'getBrand', 'uses' =>'BrandModelController@getBrand']);
     Route::post('createModels',['as' => 'createModels', 'uses' =>'BrandModelController@createModels']);
 //    Route::put('editModels/{id}',['as' => 'editModels', 'uses' =>'BrandModelController@editModels']);
@@ -116,5 +116,9 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::get('getStock',['as' => 'getStock', 'uses' =>'StockController@getStock']);
     Route::get('searchStock/{name}',['as' => 'searchStock', 'uses' =>'StockController@searchStock']);
 
+
+    //dashboard .............
+    Route::get('totalServiceIncome',['as' => 'totalServiceIncome', 'uses' =>'ServiceController@totalServiceIncome']);
+    Route::get('getJobCardCount',['as' => 'getJobCardCount', 'uses' =>'DashBoardController@getJobCardCount']);
 
 });

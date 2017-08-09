@@ -128,6 +128,7 @@ class LoginController extends Controller
             $user->name=$data['name'];
             $user->email=$data['email'];
             $user->role=$data['role'];
+            $user->password=hash('sha512',$request['password']);
             $user->save();
 
             if($user->save())

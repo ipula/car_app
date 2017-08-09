@@ -16,7 +16,7 @@ class TechnicianController extends Controller
         }
         else
         {
-            $technician=Technician::paginate(10);
+            $technician=Technician::all();
         }
         return response()->json(["technician"=>$technician],200);
     }
