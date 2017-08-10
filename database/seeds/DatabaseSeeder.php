@@ -13,12 +13,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-//        $user = new User();
-//        $user->name = 'ipula';
-//        $user->email = 'ipula@gmail.com';
-//        $user->password = hash('sha512','123');
-//        $user->role = "admin";
-//        $user->save();
+        $user = new User();
+        $user->name = 'ipula';
+        $user->email = 'ipula@gmail.com';
+        $user->password = hash('sha512','123');
+        $user->role = "admin";
+        $user->save();
 
         $user = new Supplier();
         $user->supplier_name = 'Common Supplier';
