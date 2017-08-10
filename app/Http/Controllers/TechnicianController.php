@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Mail;
 
 class TechnicianController extends Controller
 {
-    public function getTechnician()
+    public function getTechnician(Request $request)
     {
-        if(isset($request['page']) && $request['page']!=0) {
+        if(isset($request['page']) && $request['page']!=0){
             $technician=Technician::paginate(10);
         }
         else
