@@ -11,7 +11,7 @@ class DashBoardController extends Controller
     public function getJobCardCount()
     {
         $data=array();
-        $total="select DATE_FORMAT(created_at, '%a') as date ,count(job_card_id) as total from job_card where date_format(created_at, '%Y-%m-%d') between CURDATE() - INTERVAL 6 DAY and CURDATE() group by created_at";
+        $total="select DATE_FORMAT(created_at, '%a') as date ,count(job_card_id) as total from job_card where date_format(created_at, '%Y-%m-%d') between CURDATE() - INTERVAL 6 DAY and CURDATE() group by DATE_FORMAT(created_at, '%a')";
         $result=DB::select(DB::raw($total));
 //        for ($x=0; $x<count($result); $x++)
 //        {
