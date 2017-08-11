@@ -24,6 +24,7 @@ class CreateInvoicesTable extends Migration
             $table->integer('invoice_job_card_id')->unsigned()->default(null)->nullable();
             $table->integer('invoice_users_id')->unsigned()->default(null)->nullable();
             $table->decimal('invoice_discount_rate',10,2)->default(null)->nullable();
+            $table->decimal('invoice_agent_discount',10,2)->default(null)->nullable();
             $table->decimal('invoice_voucher_pay',10,2)->default(null)->nullable();
 
 

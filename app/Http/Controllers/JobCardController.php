@@ -12,17 +12,17 @@ class JobCardController extends Controller
 {
     public function getAllJobCards()
     {
-        $job=JobCard::with(['getVehicle.getBrand','getVehicle.getModel','getUser','getJobCardMaterial.getMaterial','getJobCardDetails.getService','getJobCardDetails.getTechnician.techData'])->get();
+        $job=JobCard::with(['getVehicle.getBrand','getVehicle.getModel','getVehicle.getAgent','getUser','getJobCardMaterial.getMaterial','getJobCardDetails.getService','getJobCardDetails.getTechnician.techData'])->get();
         return response()->json(["job"=>$job],200);
     }
     public function getUsersJobCards($id=null)
     {
-        $job=JobCard::with(['getVehicle.getBrand','getVehicle.getModel','getUser'])->where('job_card_users_id','=',$id)->get();
+        $job=JobCard::with(['getVehicle.getBrand','getVehicle.getModel','getVehicle.getAgent','getUser','getJobCardMaterial.getMaterial','getJobCardDetails.getService','getJobCardDetails.getTechnician.techData'])->where('job_card_users_id','=',$id)->get();
         return response()->json(["job"=>$job],200);
     }
     public function loadJobCardByVehicle($id=null)
     {
-        $job=JobCard::with(['getVehicle.getBrand','getVehicle.getModel','getUser'])->where('job_card_vehicle_id','=',$id)->where('job_card_status','=',2)->get();
+        $job=JobCard::with(['getVehicle.getBrand','getVehicle.getAgent','getVehicle.getModel','getUser'])->where('job_card_vehicle_id','=',$id)->where('job_card_status','=',2)->get();
         return response()->json(["job"=>$job],200);
     }
     public function createJobCard(Request $request)

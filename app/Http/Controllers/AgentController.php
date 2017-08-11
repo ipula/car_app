@@ -45,7 +45,7 @@ class AgentController extends Controller
 
         if($agent->save())
         {
-            return response()->json(["msg"=>"Agent Update Created"],200);
+            return response()->json(["msg"=>"Agent Update Success"],200);
         }
         else
         {
@@ -58,9 +58,16 @@ class AgentController extends Controller
         $agent=Agent::find($id);
         return response()->json(["agent"=>$agent],200);
     }
-    public function getAgent()
+    public function getAgent(Request $request)
     {
-        $agent=Agent::paginate(10);
+        if(isset($request['page']) && $request['page']!=0)
+        {
+            $agent=Agent::paginate(10);
+        }
+        else
+        {
+            $agent=Agent::all();
+        }
         return response()->json(["agent"=>$agent],200);
     }
 

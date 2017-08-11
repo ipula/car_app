@@ -17,7 +17,7 @@ class VehicleController extends Controller
         }
         else
         {
-            $vehicle=Vehicle::with(['getBrand','getModel'])->get()
+            $vehicle=Vehicle::with(['getBrand','getModel','getAgent'])->get()
             ;return response()->json(["vehicle"=>$vehicle],200);
         }
 
@@ -37,6 +37,7 @@ class VehicleController extends Controller
         $vehicle->vehicle_chassis_no=$data['vehicle_chassis_no'];
         $vehicle->vehicle_vehicle_models_id=$data['vehicle_vehicle_models_id'];
         $vehicle->vehicle_vehicle_brand_id=$data['vehicle_vehicle_brand_id'];
+        $vehicle->vehicle_agent_id=$data['vehicle_agent_id'];
         $vehicle->save();
 
         if($vehicle->save())
@@ -63,6 +64,7 @@ class VehicleController extends Controller
         $vehicle->vehicle_chassis_no=$data['vehicle_chassis_no'];
         $vehicle->vehicle_vehicle_models_id=$data['vehicle_vehicle_models_id'];
         $vehicle->vehicle_vehicle_brand_id=$data['vehicle_vehicle_brand_id'];
+        $vehicle->vehicle_agent_id=$data['vehicle_agent_id'];
         $vehicle->save();
 
 
@@ -78,12 +80,12 @@ class VehicleController extends Controller
 
     public function loadVehicle($id=null)
     {
-        $vehicle=Vehicle::with(['getBrand','getModel'])->find($id);
+        $vehicle=Vehicle::with(['getBrand','getModel','getAgent'])->find($id);
         return response()->json(["vehicle"=>$vehicle],200);
     }
     public function searchVehicle($number=null)
     {
-        $vehicle=Vehicle::with(['getBrand','getModel'])->where('vehicle_no','LIKE', '%' . $number . '%')->get();
+        $vehicle=Vehicle::with(['getBrand','getModel','getAgent'])->where('vehicle_no','LIKE', '%' . $number . '%')->get();
         return response()->json(["vehicle"=>$vehicle],200);
     }
 }

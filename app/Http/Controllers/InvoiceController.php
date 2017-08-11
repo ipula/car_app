@@ -26,6 +26,7 @@ class InvoiceController extends Controller
         $invoice->invoice_total=$data['invoice_total'];
         $invoice->invoice_cash_pay=$data['cashAggregateData']['cash_total'];
         $invoice->invoice_discount_rate=$data['discountPayments']['discount'];
+        $invoice->invoice_agent_discount=$data['discountPayments']['invoice_agent_discount'];
         $invoice->invoice_card_pay=$data['cardAggregateData']['card_total'];
         $invoice->invoice_cheque_pay=$data['chequeAggregateData']['cheque_total'];
         $invoice->invoice_job_card_id=$data['job_card_id']['job_card_id'];
