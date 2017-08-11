@@ -11,7 +11,7 @@ class VehicleController extends Controller
     {
         if(isset($request['page']) &&$request['page']!=0)
         {
-            $vehicle=Vehicle::with(['getBrand','getModel'])->paginate(10);
+            $vehicle=Vehicle::with(['getBrand','getModel','getAgent'])->paginate(10);
             return response()->json(["vehicle"=>$vehicle],200);
 
         }

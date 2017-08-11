@@ -121,4 +121,12 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::get('totalServiceIncome',['as' => 'totalServiceIncome', 'uses' =>'ServiceController@totalServiceIncome']);
     Route::get('getJobCardCount',['as' => 'getJobCardCount', 'uses' =>'DashBoardController@getJobCardCount']);
 
+    //agent routes...............
+
+    Route::get('getAgent',['as' => 'getAgent', 'uses' =>'AgentController@getAgent']);
+    Route::post('createAgent',['as' => 'createAgent', 'uses' =>'AgentController@createAgent']);
+    Route::get('loadAgent/{id}',['as' => 'loadAgent', 'uses' =>'AgentController@loadAgent']);
+    Route::put('editAgent/{id}',['as' => 'editAgent', 'uses' =>'AgentController@editAgent']);
+    Route::get('searchAgent/{name}',['as' => 'searchAgent', 'uses' =>'AgentController@searchAgent']);
+
 });

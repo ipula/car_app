@@ -17,5 +17,9 @@ class Vehicle extends Model
     {
         return $this->belongsTo('App\Models','vehicle_vehicle_models_id');
     }
+    public function getAgent()
+    {
+        return $this->belongsTo('App\Agent','vehicle_agent_id');
+    }
 
 }

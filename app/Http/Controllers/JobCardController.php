@@ -76,7 +76,8 @@ class JobCardController extends Controller
 
             if($success)
             {
-                return response()->json(["msg"=>"New Job Card Created","success"=>"true"],200);
+                $job=JobCard::max('job_card_id');
+                return response()->json(["msg"=>"New Job Card Created","success"=>"true","jobCard"=>$job],200);
             }
             else
             {
