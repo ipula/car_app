@@ -114,6 +114,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
 
 
     Route::get('getStock',['as' => 'getStock', 'uses' =>'StockController@getStock']);
+    Route::get('getLowStock',['as' => 'getStock', 'uses' =>'StockController@getLowStock']);
     Route::get('searchStock/{name}',['as' => 'searchStock', 'uses' =>'StockController@searchStock']);
 
 
