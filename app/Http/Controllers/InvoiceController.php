@@ -90,7 +90,7 @@ class InvoiceController extends Controller
 
     public function loadInvoiceById($id=null)
     {
-        $invoice=Invoice::with(['getJobCard.getVehicle','getJobCard.getUser','getJobCard.getJobCardDetails.getTechnician','getJobCard.getJobCardDetails.getService','getJobCard.getJobCardDetails.getTechnician','getJobCard.getJobCardDetails.getServiceType','getJobCard.getJobCardMaterial.getMaterial','getUsers'])->find($id);
+        $invoice=Invoice::with(['getJobCard.getVehicle.getAgent','getJobCard.getUser','getJobCard.getJobCardDetails.getTechnician','getJobCard.getJobCardDetails.getService','getJobCard.getJobCardDetails.getTechnician','getJobCard.getJobCardDetails.getServiceType','getJobCard.getJobCardMaterial.getMaterial','getUsers'])->find($id);
         return response()->json(['invoice'=>$invoice]);
     }
 }

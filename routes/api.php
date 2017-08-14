@@ -130,4 +130,8 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::put('editAgent/{id}',['as' => 'editAgent', 'uses' =>'AgentController@editAgent']);
     Route::get('searchAgent/{name}',['as' => 'searchAgent', 'uses' =>'AgentController@searchAgent']);
 
+//    report routes............
+
+
+ Route::get('getAgentDueAmount',['as' => 'getAgentDueAmount', 'uses' =>'ReportController@getAgentDueAmount']);
 });
