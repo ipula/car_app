@@ -20,6 +20,7 @@ class ServiceMaterialController extends Controller
         $material=new ServiceMaterial();
         $material->service_material_name=$data['service_material_name'];
         $material->service_material_unit=$data['service_material_unit'];
+        $material->service_material_code=$data['service_material_code'];
         $material->service_material_unit_price=$data['service_material_unit_price'];
         $material->service_material_low_qty=$data['service_material_low_qty'];
         $material->service_material_max_qty=$data['service_material_max_qty'];
@@ -50,6 +51,7 @@ class ServiceMaterialController extends Controller
         $material=ServiceMaterial::find($id);
         $material->service_material_name=$data['service_material_name'];
         $material->service_material_unit=$data['service_material_unit'];
+        $material->service_material_code=$data['service_material_code'];
         $material->service_material_unit_price=$data['service_material_unit_price'];
         $material->service_material_low_qty=$data['service_material_low_qty'];
         $material->service_material_max_qty=$data['service_material_max_qty'];
