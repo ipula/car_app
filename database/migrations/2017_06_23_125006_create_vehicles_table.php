@@ -25,6 +25,7 @@ class CreateVehiclesTable extends Migration
             $table->integer('vehicle_vehicle_models_id')->unsigned()->default(null)->nullable();
             $table->integer('vehicle_vehicle_brand_id')->unsigned()->default(null)->nullable();
             $table->integer('vehicle_agent_id')->unsigned()->default(null)->nullable();
+            $table->string('vehicle_cupon_no',450)->default(null)->nullable();
             $table->timestamps();
 
             $table->foreign('vehicle_vehicle_models_id')->references('models_id')->on('models')->onUpdate('cascade')->onDelete('cascade');

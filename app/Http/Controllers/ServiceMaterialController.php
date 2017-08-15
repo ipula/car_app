@@ -73,4 +73,10 @@ class ServiceMaterialController extends Controller
         return response()->json(["material"=>$material],200);
 
     }
+    public function searchServiceMaterialByCode($code=null)
+    {
+        $material=ServiceMaterial::where('service_material_code','LIKE', '%' . $code . '%')->get();
+        return response()->json(["material"=>$material],200);
+
+    }
 }

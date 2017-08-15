@@ -89,6 +89,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::get('loadServiceMaterial/{id}',['as' => 'addServiceMaterial', 'uses' =>'ServiceMaterialController@loadServiceMaterial']);
     Route::put('editServiceMaterial/{id}',['as' => 'editServiceMaterial', 'uses' =>'ServiceMaterialController@editServiceMaterial']);
     Route::get('searchServiceMaterial/{name}',['as' => 'searchServiceMaterial', 'uses' =>'ServiceMaterialController@searchServiceMaterial']);
+    Route::get('searchServiceMaterialByCode/{code}',['as' => 'searchServiceMaterialByCode', 'uses' =>'ServiceMaterialController@searchServiceMaterialByCode']);
 
     //invoice....................
 
@@ -132,6 +133,14 @@ Route::group(['middleware' => 'jwt.auth'], function () {
 
 //    report routes............
 
-
  Route::get('getAgentDueAmount',['as' => 'getAgentDueAmount', 'uses' =>'ReportController@getAgentDueAmount']);
+
+
+
+    //warranty routes................
+
+    Route::get('getWarranty',['as' => 'getWarranty', 'uses' =>'WarrantyController@getWarranty']);
+    Route::post('createWarranty',['as' => 'createWarranty', 'uses' =>'WarrantyController@createWarranty']);
+    Route::get('searchByVehicle/{id}',['as' => 'searchByVehicle', 'uses' =>'WarrantyController@searchByVehicle']);
+
 });
