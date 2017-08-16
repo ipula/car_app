@@ -41,8 +41,4 @@ class WarrantyController extends Controller
         return response()->json(["warranty"=>$warranty],200);
     }
 
-//    public function countWarranty($no=null)
-//    {
-//
-//    }
 }

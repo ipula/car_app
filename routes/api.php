@@ -133,7 +133,9 @@ Route::group(['middleware' => 'jwt.auth'], function () {
 
 //    report routes............
 
- Route::get('getAgentDueAmount',['as' => 'getAgentDueAmount', 'uses' =>'ReportController@getAgentDueAmount']);
+    Route::get('getAgentDueAmount',['as' => 'getAgentDueAmount', 'uses' =>'ReportController@getAgentDueAmount']);
+    Route::get('sales',['as' => 'sales', 'uses' =>'ReportController@sales']);
+    Route::get('dayEndSummary',['as' => 'dayEndSummary', 'uses' =>'ReportController@dayEndSummary']);
 
 
 

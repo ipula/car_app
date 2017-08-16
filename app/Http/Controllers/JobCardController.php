@@ -117,6 +117,7 @@ class JobCardController extends Controller
                         $jobCardDetail->job_card_detail_status = $data['addedDetail'][$x]['job_card_detail_status'];
                         $jobCardDetail->job_card_detail_quantity = $data['addedDetail'][$x]['job_card_detail_quantity'];
                         $jobCardDetail->job_card_detail_unit_price = $data['addedDetail'][$x]['job_card_detail_unit_price'];
+                        $jobCardDetail->job_card_warranty_status = $data['addedDetail'][$x]['job_card_warranty_status'];
                         $success = $jobCardDetail->save();
 
                         if ($jobCardDetail->save()) {
