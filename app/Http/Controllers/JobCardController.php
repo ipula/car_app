@@ -35,6 +35,7 @@ class JobCardController extends Controller
         $jobCard->job_card_vehicle_id=$data['job_card_vehicle_id'];
         $jobCard->job_card_users_id=$data['job_card_users_id'];
         $jobCard->job_card_total=$data['job_card_total'];
+        $jobCard->job_card_warranty_status=$data['job_card_warranty_status'];
         $jobCard->job_card_status=0;
         $jobCard->save();
 
