@@ -9,7 +9,7 @@ class WarrantyController extends Controller
 {
     public function getWarranty()
     {
-        $warranty=Warranty::paginate(10);
+        $warranty=Warranty::with(['getVehicle'])->paginate(10);
         return response()->json(["warranty"=>$warranty],200);
     }
 
