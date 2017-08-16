@@ -87,19 +87,22 @@ class ReportController extends Controller
         date_default_timezone_set("Asia/Colombo");
         $dateFrom=$data['dateFrom'];
         $dateTo=$data['dateTo'];
-        if($dateFrom=="null" && $dateTo=="null") {
+        $id=$data['id'];
+        if($dateFrom=="null" && $dateTo=="null" && $id=='null') {
 
             $dateFrom=date('Y-m-d',strtotime( date('Y-m-d') . ' -1 day' ));;
             $dateTo=date('Y-m-d');
-//        $invoice=Invoice::all();
             $invoice = Invoice::with(['getJobCard.getVehicle.getAgent', 'getJobCard.getUser', 'getJobCard.getJobCardDetails.getTechnician', 'getJobCard.getJobCardDetails.getService', 'getJobCard.getJobCardDetails.getTechnician', 'getJobCard.getJobCardDetails.getServiceType', 'getJobCard.getJobCardMaterial.getMaterial', 'getUsers'])->whereBetween('invoice_date',[$dateFrom,$dateTo])->get();
-            return response()->json(['invoice' => $invoice]);
+            return response()->json(['invoice' => $invoice,"dateFrom"=>$dateFrom,"dateTo"=>$dateTo]);
         }
         else
         {
-//            date_default_timezone_set("Asia/Colombo");
-            $invoice = Invoice::with(['getJobCard.getVehicle.getAgent', 'getJobCard.getUser', 'getJobCard.getJobCardDetails.getTechnician', 'getJobCard.getJobCardDetails.getService', 'getJobCard.getJobCardDetails.getTechnician', 'getJobCard.getJobCardDetails.getServiceType', 'getJobCard.getJobCardMaterial.getMaterial', 'getUsers'])->whereBetween('invoice_date',[$dateFrom,$dateTo])->get();
-            return response()->json(['invoice' => $invoice]);
+
+            $invoice = Invoice::whereHas('getJobCard.getVehicle.getAgent', 'getJobCard.getUser', 'getJobCard.getJobCardDetails.getTechnician', 'getJobCard.getJobCardDetails.getService', 'getJobCard.getJobCardDetails.getTechnician', 'getJobCard.getJobCardDetails.getServiceType', 'getJobCard.getJobCardMaterial.getMaterial', 'getUsers',function($q) use($id) {
+                $q->where('vehicle_id', '=', $id);
+
+            })->whereBetween('invoice_date',[$dateFrom,$dateTo])->get();
+            return response()->json(['invoice' => $invoice,"dateFrom"=>$dateFrom,"dateTo"=>$dateTo]);
         }
     }
 }
