@@ -103,6 +103,7 @@ class JobCardController extends Controller
         $onGoing=JobCard::find($id);
         $onGoing->job_card_total=$data['job_card_total'];
         $onGoing->job_card_status=1;
+        $onGoing->job_card_warranty_status=$data['job_card_warranty_status'];
         $onGoing->save();
         if($onGoing->save())
         {
@@ -117,7 +118,7 @@ class JobCardController extends Controller
                         $jobCardDetail->job_card_detail_status = $data['addedDetail'][$x]['job_card_detail_status'];
                         $jobCardDetail->job_card_detail_quantity = $data['addedDetail'][$x]['job_card_detail_quantity'];
                         $jobCardDetail->job_card_detail_unit_price = $data['addedDetail'][$x]['job_card_detail_unit_price'];
-                        $jobCardDetail->job_card_warranty_status = $data['addedDetail'][$x]['job_card_warranty_status'];
+//                        $jobCardDetail->job_card_warranty_status = $data['addedDetail'][$x]['job_card_warranty_status'];
                         $success = $jobCardDetail->save();
 
                         if ($jobCardDetail->save()) {
