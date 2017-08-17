@@ -236,4 +236,15 @@ class JobCardController extends Controller
         $jobCard=JobCard::with(['getVehicle.getBrand','getVehicle.getModel','getUser','getJobCardMaterial.getMaterial','getJobCardDetails.getService','getJobCardDetails.getServiceType','getJobCardDetails.getTechnician.techData'])->where('job_card_status','=',2)->get();
         return response()->json(['jobCard'=>$jobCard],200);
     }
+
+    public function searchJobCard($no=null)
+    {
+        $job=JobCard::with(['getVehicle.getBrand','getVehicle.getModel','getVehicle.getAgent','getUser','getJobCardMaterial.getMaterial','getJobCardDetails.getService','getJobCardDetails.getTechnician.techData'])->whereHas('getVehicle', function($q) use($no)
+        {
+            $numb = $no;
+            $q->where('vehicle_no','LIKE', '%' . $numb . '%');
+
+        })->paginate(10);
+        return response()->json(['job'=>$job],200);
+    }
 }

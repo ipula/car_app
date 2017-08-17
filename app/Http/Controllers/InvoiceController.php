@@ -19,7 +19,7 @@ class InvoiceController extends Controller
         {
             $invoice = Invoice::with(['getJobCard.getVehicle', 'getJobCard.getUser', 'getUsers'])->get();
         }
-        return response()->json(['invoice' => $invoice]);
+        return response()->json(['invoice' => $invoice],200);
     }
 
     public function createInvoice(Request $request)
@@ -98,6 +98,17 @@ class InvoiceController extends Controller
     public function loadInvoiceById($id=null)
     {
         $invoice=Invoice::with(['getJobCard.getVehicle.getAgent','getJobCard.getUser','getJobCard.getJobCardDetails.getTechnician','getJobCard.getJobCardDetails.getService','getJobCard.getJobCardDetails.getTechnician','getJobCard.getJobCardDetails.getServiceType','getJobCard.getJobCardMaterial.getMaterial','getUsers'])->find($id);
+        return response()->json(['invoice'=>$invoice]);
+    }
+
+    public function searchInvoice($no=null)
+    {
+        $invoice = Invoice::with(['getJobCard.getVehicle', 'getJobCard.getUser', 'getUsers'])->whereHas('getJobCard.getVehicle', function($q) use($no)
+        {
+            $numb = $no;
+            $q->where('vehicle_no','LIKE', '%' . $numb . '%');
+
+        })->paginate(10);
         return response()->json(['invoice'=>$invoice]);
     }
 }

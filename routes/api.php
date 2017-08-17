@@ -80,6 +80,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
      Route::put('completeJobCard/{id}',['as' => 'completeJobCard', 'uses' =>'JobCardController@completeJobCard']);
      Route::get('getCompleteJobCard',['as' => 'getCompleteJobCard', 'uses' =>'JobCardController@getCompleteJobCard']);
     Route::get('loadJobCardByVehicle/{vehicle_id}',['as' => 'loadJobCardByVehicle', 'uses' =>'JobCardController@loadJobCardByVehicle']);
+    Route::get('searchJobCard/{no}',['as' => 'searchJobCard', 'uses' =>'JobCardController@searchJobCard']);
 
 
     //service material.................
@@ -96,6 +97,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::get('getAllInvoice',['as' => 'getAllInvoice', 'uses' =>'InvoiceController@getAllInvoice']);
     Route::get('loadInvoiceById/{id}',['as' => 'loadInvoiceById', 'uses' =>'InvoiceController@loadInvoiceById']);
     Route::post('createInvoice',['as' => 'createInvoice', 'uses' =>'InvoiceController@createInvoice']);
+    Route::get('searchInvoice/{no}',['as' => 'searchInvoice', 'uses' =>'InvoiceController@searchInvoice']);
 
     //Grn.........................
 
