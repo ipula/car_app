@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Invoice;
+use App\JobCard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 
 class ReportController extends Controller
 {
@@ -97,12 +99,18 @@ class ReportController extends Controller
         }
         else
         {
+            $job=JobCard::select('job_card_id')->where('job_card_vehicle_id','=',$id)->get();
+            if(count($job)!=0)
+            {
+                $invoice = Invoice::with(['getJobCard.getVehicle.getAgent', 'getJobCard.getUser', 'getJobCard.getJobCardDetails.getTechnician', 'getJobCard.getJobCardDetails.getService', 'getJobCard.getJobCardDetails.getTechnician', 'getJobCard.getJobCardDetails.getServiceType', 'getJobCard.getJobCardMaterial.getMaterial', 'getUsers'])->where('invoice_job_card_id','=',$job[0]['job_card_id'])->whereBetween('invoice_date',[$dateFrom,$dateTo])->get();
+                return response()->json(['invoice' => $invoice,"dateFrom"=>$id,"dateTo"=>$dateTo]);
+            }
+            else
+            {
+                $invoice=[];
+                return response()->json(['invoice' => $invoice,"dateFrom"=>$id,"dateTo"=>$dateTo]);
+            }
 
-            $invoice = Invoice::whereHas('getJobCard.getVehicle.getAgent', 'getJobCard.getUser', 'getJobCard.getJobCardDetails.getTechnician', 'getJobCard.getJobCardDetails.getService', 'getJobCard.getJobCardDetails.getTechnician', 'getJobCard.getJobCardDetails.getServiceType', 'getJobCard.getJobCardMaterial.getMaterial', 'getUsers',function($q) use($id) {
-                $q->where('vehicle_id', '=', $id);
-
-            })->whereBetween('invoice_date',[$dateFrom,$dateTo])->get();
-            return response()->json(['invoice' => $invoice,"dateFrom"=>$dateFrom,"dateTo"=>$dateTo]);
         }
     }
 }
