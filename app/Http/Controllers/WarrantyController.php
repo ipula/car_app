@@ -42,7 +42,7 @@ class WarrantyController extends Controller
 //            $no = Input::get('search');
             $q->where('vehicle_no','LIKE', '%' . $no . '%');
 
-        })->paginate;
+        })->paginate(10);
         return response()->json(["warranty"=>$warranty],200);
     }
 
