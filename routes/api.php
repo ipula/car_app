@@ -147,5 +147,6 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::get('getWarranty',['as' => 'getWarranty', 'uses' =>'WarrantyController@getWarranty']);
     Route::post('createWarranty',['as' => 'createWarranty', 'uses' =>'WarrantyController@createWarranty']);
     Route::get('searchByVehicle/{id}',['as' => 'searchByVehicle', 'uses' =>'WarrantyController@searchByVehicle']);
+    Route::get('searchWarrantyVehicle/{id}',['as' => 'searchWarrantyVehicle', 'uses' =>'WarrantyController@searchWarrantyVehicle']);
 
 });
