@@ -9,10 +9,17 @@ use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
 {
-    public function getAllInvoice()
+    public function getAllInvoice(Request $request)
     {
-        $invoice=Invoice::with(['getJobCard.getVehicle','getJobCard.getUser','getUsers'])->get();
-        return response()->json(['invoice'=>$invoice]);
+        if(isset($request['page']) && $request['page']!=0) {
+            $invoice = Invoice::with(['getJobCard.getVehicle', 'getJobCard.getUser', 'getUsers'])->paginate(10);
+
+        }
+        else
+        {
+            $invoice = Invoice::with(['getJobCard.getVehicle', 'getJobCard.getUser', 'getUsers'])->get();
+        }
+        return response()->json(['invoice' => $invoice]);
     }
 
     public function createInvoice(Request $request)

@@ -37,7 +37,12 @@ class WarrantyController extends Controller
 
     public function searchByVehicle($no=null)
     {
-        $warranty=Warranty::with(['getVehicle'])->where('warranty_vehicle_id','=',$no)->get();
+        $warranty=Warranty::whereHas('getVehicle', function($q) use($no)
+        {
+//            $no = Input::get('search');
+            $q->where('vehicle_no','LIKE', '%' . $no . '%');
+
+        })->paginate;
         return response()->json(["warranty"=>$warranty],200);
     }
 

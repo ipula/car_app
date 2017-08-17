@@ -10,9 +10,17 @@ use Illuminate\Http\Request;
 
 class JobCardController extends Controller
 {
-    public function getAllJobCards()
+    public function getAllJobCards(Request $request)
     {
-        $job=JobCard::with(['getVehicle.getBrand','getVehicle.getModel','getVehicle.getAgent','getUser','getJobCardMaterial.getMaterial','getJobCardDetails.getService','getJobCardDetails.getTechnician.techData'])->get();
+        if(isset($request['page']) && $request['page']!=0)
+        {
+            $job=JobCard::with(['getVehicle.getBrand','getVehicle.getModel','getVehicle.getAgent','getUser','getJobCardMaterial.getMaterial','getJobCardDetails.getService','getJobCardDetails.getTechnician.techData'])->paginate(10);
+        }
+        else
+        {
+            $job=JobCard::with(['getVehicle.getBrand','getVehicle.getModel','getVehicle.getAgent','getUser','getJobCardMaterial.getMaterial','getJobCardDetails.getService','getJobCardDetails.getTechnician.techData'])->get();
+        }
+
         return response()->json(["job"=>$job],200);
     }
     public function getUsersJobCards($id=null)
