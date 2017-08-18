@@ -62,6 +62,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::put('editTechnician/{id}',['as' => 'editTechnician', 'uses' =>'TechnicianController@editTechnician']);
     Route::get('loadTechnician/{id}',['as' => 'loadTechnician', 'uses' =>'TechnicianController@loadTechnician']);
     Route::get('searchTechnician/{name}',['as' => 'searchTechnician', 'uses' =>'TechnicianController@searchTechnician']);
+    Route::get('searchTechnicianPaginate/{name}',['as' => 'searchTechnicianPaginate', 'uses' =>'TechnicianController@searchTechnicianPaginate']);
 
 //vehicle routes.......................................
     Route::get('getVehicle',['as' => 'getVehicle', 'uses' =>'VehicleController@getVehicle']);
@@ -69,6 +70,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::put('editVehicle/{id}',['as' => 'editVehicle', 'uses' =>'VehicleController@editVehicle']);
     Route::get('loadVehicle/{id}',['as' => 'loadTechnician', 'uses' =>'VehicleController@loadVehicle']);
     Route::get('searchVehicle/{number}',['as' => 'searchVehicle', 'uses' =>'VehicleController@searchVehicle']);
+    Route::get('searchVehiclePaginate/{number}',['as' => 'searchVehiclePaginate', 'uses' =>'VehicleController@searchVehiclePaginate']);
 
 //job card routes
 
@@ -112,6 +114,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::get('loadSupplier/{id}',['as' => 'loadSupplier', 'uses' =>'SupplierController@loadSupplier']);
     Route::put('editSupplier/{id}',['as' => 'editSupplier', 'uses' =>'SupplierController@editSupplier']);
     Route::get('searchSupplier/{name}',['as' => 'searchSupplier', 'uses' =>'SupplierController@searchSupplier']);
+    Route::get('searchSupplierPaginate/{name}',['as' => 'searchSupplierPaginate', 'uses' =>'SupplierController@searchSupplierPaginate']);
 
     //current stock...........
 
@@ -132,6 +135,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::get('loadAgent/{id}',['as' => 'loadAgent', 'uses' =>'AgentController@loadAgent']);
     Route::put('editAgent/{id}',['as' => 'editAgent', 'uses' =>'AgentController@editAgent']);
     Route::get('searchAgent/{name}',['as' => 'searchAgent', 'uses' =>'AgentController@searchAgent']);
+    Route::get('searchAgentPaginate/{name}',['as' => 'searchAgentPaginate', 'uses' =>'AgentController@searchAgentPaginate']);
 
 //    report routes............
 

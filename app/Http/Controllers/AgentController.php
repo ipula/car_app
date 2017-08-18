@@ -76,4 +76,11 @@ class AgentController extends Controller
         $agent=Agent::where('agent_name','LIKE', '%' . $name . '%')->get();
         return response()->json(["agent"=>$agent],200);
     }
+
+    public function searchAgentPaginate($name=null)
+    {
+        $agent=Agent::where('agent_name','LIKE', '%' . $name . '%')->paginate(10);
+        return response()->json(["agent"=>$agent],200);
+    }
+
 }

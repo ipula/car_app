@@ -74,4 +74,10 @@ class SupplierController extends Controller
         $supplier=Supplier::where('supplier_name','LIKE', '%' . $name . '%')->get();
         return response()->json(["supplier"=>$supplier],200);
     }
+
+    public function searchSupplierPaginate($name=null)
+    {
+        $supplier=Supplier::where('supplier_name','LIKE', '%' . $name . '%')->paginate(10);
+        return response()->json(["supplier"=>$supplier],200);
+    }
 }

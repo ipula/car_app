@@ -90,4 +90,10 @@ class VehicleController extends Controller
         $vehicle=Vehicle::with(['getBrand','getModel','getAgent'])->where('vehicle_no','LIKE', '%' . $number . '%')->get();
         return response()->json(["vehicle"=>$vehicle],200);
     }
+
+    public function searchVehiclePaginate($number=null)
+    {
+        $vehicle=Vehicle::with(['getBrand','getModel','getAgent'])->where('vehicle_no','LIKE', '%' . $number . '%')->paginate(10);
+        return response()->json(["vehicle"=>$vehicle],200);
+    }
 }
