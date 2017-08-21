@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'driver' => env('MAIL_DRIVER', 'mailgun'),
+    'driver' => env('MAIL_DRIVER', 'sparkpost'),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,7 +56,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'mail@pos.geniussoft.lk'),
+        'address' => env('MAIL_FROM_ADDRESS', 'carecare@sp.geniussoft.lk'),
         'name' => env('MAIL_FROM_NAME', 'Car Care'),
     ],
 

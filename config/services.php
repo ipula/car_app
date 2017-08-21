@@ -14,25 +14,25 @@ return [
     |
     */
 
-    'mailgun' => [
-        'domain' => 'pos.geniussoft.lk',
-        'secret' => 'key-0d25cb61a1714ae623f4127ec4f4cda5',
-    ],
-
-    'ses' => [
-        'key' => env('SES_KEY'),
-        'secret' => env('SES_SECRET'),
-        'region' => 'us-east-1',
-    ],
-
-//    'sparkpost' => [
-//        'secret' => '75346b752667fc43e797f3b3f35ca8fd5101f9a2',
+//    'mailgun' => [
+//        'domain' => 'pos.geniussoft.lk',
+//        'secret' => 'key-0d25cb61a1714ae623f4127ec4f4cda5',
+//    ],
+//
+//    'ses' => [
+//        'key' => env('SES_KEY'),
+//        'secret' => env('SES_SECRET'),
+//        'region' => 'us-east-1',
 //    ],
 
-    'stripe' => [
-        'model' => App\User::class,
-        'key' => env('STRIPE_KEY'),
-        'secret' => env('STRIPE_SECRET'),
+    'sparkpost' => [
+        'secret' => '75346b752667fc43e797f3b3f35ca8fd5101f9a2',
     ],
+
+//    'stripe' => [
+//        'model' => App\User::class,
+//        'key' => env('STRIPE_KEY'),
+//        'secret' => env('STRIPE_SECRET'),
+//    ],
 
 ];

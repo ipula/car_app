@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class SupplierController extends Controller
 {
@@ -16,6 +17,13 @@ class SupplierController extends Controller
         $supplier->supplier_tel_no=$data['supplier_tel_no'];
         $supplier->supplier_code=$data['supplier_code'];
         $supplier->save();
+
+//        $data = array('name'=>"Virat Gandhi");
+
+        Mail::send('email', [], function ($message) {
+        $message->to('ipularanasinghe007@gmail.com','Ipula')
+            ->subject('From SparkPost with ❤');
+        });
 
 
         if($supplier->save())
