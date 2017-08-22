@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Request;
 use JWTAuth;
 
+
 class LoginController extends Controller
 {
     /*
