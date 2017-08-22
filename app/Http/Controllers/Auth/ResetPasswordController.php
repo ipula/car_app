@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Symfony\Component\HttpFoundation\Request;
+use Tymon\JWTAuth\JWTAuth;
 
 class ResetPasswordController extends Controller
 {
@@ -25,7 +27,7 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+//    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -34,6 +36,17 @@ class ResetPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+//        $this->middleware('guest');
+    }
+
+    public function getRestPwdUser($token=null,Request $request)
+    {
+        JWTAuth::setToken($token);
+
+        $tokens = JWTAuth::getToken();
+        $decode = JWTAuth::decode($tokens);
+
+//        $user = JWTAuth::parseToken()->toUser();
+        return response()->json([$decode,$tokens],200);
     }
 }

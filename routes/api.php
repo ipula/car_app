@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 Route::post('login',['as' => 'login', 'uses' =>'Auth\LoginController@login']);
 Route::get('getForgetPwd/{email}',['as' => 'getForgetPwd', 'uses' =>'Auth\LoginController@getForgetPwd']);
-Route::post('getRestPwdUser/{token}',['as' => 'getRestPwdUser', 'uses' =>'Auth\LoginController@getRestPwdUser']);
+Route::post('getRestPwdUser/{token}',['as' => 'getRestPwdUser', 'uses' =>'Auth\ResetPasswordController@getRestPwdUser']);
 
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
