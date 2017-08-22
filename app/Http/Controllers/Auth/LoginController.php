@@ -178,7 +178,12 @@ class LoginController extends Controller
 
     public function getRestPwdUser($token=null,Request $request)
     {
+        JWTAuth::setToken($token);
+
+        $token = JWTAuth::getToken();
+        $decode = JWTAuth::decode($token);
+
 //        $user = JWTAuth::parseToken()->toUser();
-//        return response()->json($user,200);
+        return response()->json($decode,200);
     }
 }
