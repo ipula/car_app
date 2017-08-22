@@ -180,10 +180,10 @@ class LoginController extends Controller
     {
         JWTAuth::setToken($token);
 
-        $token = JWTAuth::getToken();
-        $decode = JWTAuth::decode($token);
+        $tokens = JWTAuth::getToken();
+        $decode = JWTAuth::decode($tokens);
 
 //        $user = JWTAuth::parseToken()->toUser();
-        return response()->json($decode,200);
+        return response()->json($decode,$tokens,200);
     }
 }
