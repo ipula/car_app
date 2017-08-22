@@ -18,9 +18,9 @@ class SupplierController extends Controller
         $supplier->supplier_code=$data['supplier_code'];
         $supplier->save();
 
-//        $data = array('name'=>"Virat Gandhi");
+        $date = array('name'=>"Virat Gandhi");
 
-        Mail::send('email', [], function ($message) {
+        Mail::send('email', $date, function ($message) {
         $message->to('ipularanasinghe007@gmail.com','Ipula')
             ->subject('From SparkPost with ❤');
         });

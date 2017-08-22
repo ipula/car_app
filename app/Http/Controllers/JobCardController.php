@@ -100,6 +100,73 @@ class JobCardController extends Controller
         }
     }
 
+    public function createJobCardByWeb(Request $request)
+    {
+        $success=false;
+        $data=$request->all();
+
+        $jobCard=new JobCard();
+
+        $jobCard->job_card_vehicle_id=$data['job_card_vehicle_id'];
+        $jobCard->job_card_users_id=$data['job_card_users_id'];
+        $jobCard->job_card_total=$data['job_card_total'];
+        $jobCard->job_card_warranty_status=$data['job_card_warranty_status'];
+        $jobCard->job_card_status=2;
+        $jobCard->save();
+
+        if($jobCard->save())
+        {
+            for($x=0; $x<count($data['addedDetail']); $x++)
+            {
+                $jobCardDetail=new JobCardDetail();
+                $jobCardDetail->job_card_detail_job_card_id=JobCard::max('job_card_id');
+                $jobCardDetail->job_card_detail_service_id=$data['addedDetail'][$x]['job_card_detail_service_id'];
+                $jobCardDetail->job_card_detail_category=$data['addedDetail'][$x]['job_card_detail_category'];
+                $jobCardDetail->job_card_detail_comment=$data['addedDetail'][$x]['job_card_detail_comment'];
+                $jobCardDetail->job_card_detail_status=0;
+                $jobCardDetail->job_card_detail_quantity=$data['addedDetail'][$x]['job_card_detail_quantity'];
+                $jobCardDetail->job_card_detail_unit_price=$data['addedDetail'][$x]['job_card_detail_unit_price'];
+                $success=$jobCardDetail->save();
+                if($success)
+                    for($y=0; $y<count($data['addedDetail'][$x]['technician']); $y++)
+                    {
+                        $tecDetail=new TechnicianDetail();
+                        $tecDetail->technician_detail_job_card_detail_id=JobCardDetail::max('job_card_detail_id');
+                        $tecDetail->technician_detail_technician_id=$data['addedDetail'][$x]['technician'][$y]['technician_id'];
+                        $tecDetail->save();
+
+                    }
+
+            }
+            for($y=0; $y<count($data['materials']); $y++)
+            {
+
+                $material=new ServiceMaterialDetail();
+                $material->service_material_detail_service_material_id=$data['materials'][$y]['service_material_id'];
+                $material->service_material_detail_job_card_id=JobCard::max('job_card_id');
+                $material->service_material_unit_price=$data['materials'][$y]['service_material_unit_price'];
+                $material->service_material_detail_qty=$data['materials'][$y]['service_material_detail_qty'];
+                $material->save();
+
+            }
+
+            if($success)
+            {
+                $job=JobCard::max('job_card_id');
+                return response()->json(["msg"=>"New Job Card Created","success"=>"true","jobCard"=>$job],200);
+            }
+            else
+            {
+                return response()->json(["msg"=>"New Job Card Created Failed"],500);
+            }
+
+        }
+        else
+        {
+            return response()->json(["msg"=>"New Job Card Created Failed"],500);
+        }
+    }
+
     public function loadJobCard($id=null)
     {
         $job=JobCard::with(['getVehicle.getBrand','getVehicle.getModel','getVehicle.getAgent','getUser','getJobCardMaterial.getMaterial','getJobCardDetails.getService','getJobCardDetails.getServiceType','getJobCardDetails.getTechnician.techData'])->find($id);

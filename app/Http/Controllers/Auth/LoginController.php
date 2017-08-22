@@ -82,6 +82,7 @@ class LoginController extends Controller
             'name' => 'required',
         ]);
 
+
         if(!$validate->fails())
         {
             $user=new User();
@@ -93,6 +94,10 @@ class LoginController extends Controller
 
             if($user->save())
             {
+                Mail::send('email', array('email'=>$request['email'],'password'=>$request['password']), function ($message)use ($request) {
+                    $message->to($request['email'],$request['name'])
+                        ->subject('Login Details');
+                });
                 return response()->json("user created",201);
             }
             else

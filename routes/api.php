@@ -83,6 +83,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
      Route::get('getCompleteJobCard',['as' => 'getCompleteJobCard', 'uses' =>'JobCardController@getCompleteJobCard']);
     Route::get('loadJobCardByVehicle/{vehicle_id}',['as' => 'loadJobCardByVehicle', 'uses' =>'JobCardController@loadJobCardByVehicle']);
     Route::get('searchJobCard/{no}',['as' => 'searchJobCard', 'uses' =>'JobCardController@searchJobCard']);
+    Route::post('createJobCardByWeb',['as' => 'createJobCardByWeb', 'uses' =>'JobCardController@createJobCardByWeb']);
 
 
     //service material.................
