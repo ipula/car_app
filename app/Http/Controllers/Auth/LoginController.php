@@ -185,6 +185,6 @@ class LoginController extends Controller
         $decode = JWTAuth::decode($tokens);
 
 //        $user = JWTAuth::parseToken()->toUser();
-        return response()->json($decode,$tokens,200);
+        return response()->json([$decode,$tokens],200);
     }
 }
