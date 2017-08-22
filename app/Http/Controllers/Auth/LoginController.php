@@ -104,7 +104,7 @@ class LoginController extends Controller
             }
             else
             {
-                return response()->json("something went wrong",200);
+                return response()->json("something went wrong",500);
             }
         }
         else

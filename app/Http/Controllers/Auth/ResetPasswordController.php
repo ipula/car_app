@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Symfony\Component\HttpFoundation\Request;
+
 use JWTAuth;
+//use Tymon\JWTAuth\JWTAuth;
 
 class ResetPasswordController extends Controller
 {
@@ -39,16 +42,22 @@ class ResetPasswordController extends Controller
 //        $this->middleware('guest');
     }
 
-    public function getRestPwdUser($token=null,Request $request)
+    public function getRestPwdUser($tok=null,Request $request)
     {
-//        JWTAuth::setToken($token);
-//
-//        $tokens = JWTAuth::getToken();
-//        $decode = JWTAuth::decode($tokens);
-        $payload = JWTAuth::getPayload($token);
+        $data=$request->all();
+        $userData = JWTAuth::parseToken()->authenticate();
+        $user=User::find($userData->id);
+        $user->password=hash('sha512',$data['resetPwd']);
+        $user->save();
 
-//        $user = JWTAuth::parseToken()->toUser();
-        return response()->json([$payload],200);
-//        return response()->json([$decode,$tokens,$payload],200);
+        if($user->save())
+        {
+            return response()->json(["msg"=>"Password Updated"],200);
+        }
+        else
+        {
+            return response()->json(["msg"=>"something went wrong"],500);
+        }
+
     }
 }
