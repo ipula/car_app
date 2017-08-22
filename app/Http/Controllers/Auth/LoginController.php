@@ -94,7 +94,7 @@ class LoginController extends Controller
 
             if($user->save())
             {
-                Mail::send('email', array('email'=>$request['email'],'password'=>$request['password']), function ($message)use ($request) {
+                Mail::send('email', array('user'=>$request->all()), function ($message)use ($request) {
                     $message->to($request['email'],$request['name'])
                         ->subject('Login Details');
                 });
