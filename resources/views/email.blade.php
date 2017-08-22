@@ -9,7 +9,7 @@
 <div>
     To login your details,use this<a href="http://139.59.235.246:8080"> link</a>.<br/>
     <p> email : {{$user['email']}} </p>
-    {{--<p> password : {{array($user['password'])}} </p>--}}
+    <p> password : {{$user['password']}} </p>
 </div>
 </body>
 </html>

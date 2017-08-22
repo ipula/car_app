@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 */
 
 Route::post('login',['as' => 'login', 'uses' =>'Auth\LoginController@login']);
+Route::get('getForgetPwd/{email}',['as' => 'getForgetPwd', 'uses' =>'Auth\LoginController@getForgetPwd']);
+Route::post('getRestPwdUser/{token}',['as' => 'getRestPwdUser', 'uses' =>'Auth\LoginController@getRestPwdUser']);
 
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
@@ -26,6 +28,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::get('user/{id}',['as' => 'loadUser', 'uses' =>'Auth\LoginController@loadUser']);
     Route::post('createUser', ['as' => 'createUser', 'uses' => 'Auth\LoginController@createUser']);
     Route::put('editUser/{id}',['as' => 'editUser', 'uses' =>'Auth\LoginController@editUser']);
+
 
 //brand routes..........................................
     Route::get('getBrand',['as' => 'getBrand', 'uses' =>'BrandModelController@getBrand']);

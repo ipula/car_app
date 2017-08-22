@@ -154,4 +154,31 @@ class LoginController extends Controller
         $user=User::find($id);
         return response()->json(["users"=>$user],200);
     }
+
+    public function getForgetPwd($email=null)
+    {
+        $user=User::where('email','=',$email)->first();
+        if(empty($user))
+        {
+            return response()->json(["msg"=>"No User Found"],500);
+        }
+        else
+        {
+            $customClaims = ["email"=>$user['email'],"name"=>$user['name']];
+            $token =JWTAuth::fromUser($user,$customClaims);
+
+            Mail::send('reset_password', array('user'=>$user, 'token'=>$token), function ($message)use ($user) {
+                $message->to($user['email'],$user['name'])
+                    ->subject('Reset Password');
+            });
+            return response()->json(["msg"=>"Check Your Email"],200);
+        }
+
+    }
+
+    public function getRestPwdUser($token=null,Request $request)
+    {
+//        $user = JWTAuth::parseToken()->toUser();
+//        return response()->json($user,200);
+    }
 }
