@@ -41,12 +41,14 @@ class ResetPasswordController extends Controller
 
     public function getRestPwdUser($token=null,Request $request)
     {
-        JWTAuth::setToken($token);
-
-        $tokens = JWTAuth::getToken();
-        $decode = JWTAuth::decode($tokens);
+//        JWTAuth::setToken($token);
+//
+//        $tokens = JWTAuth::getToken();
+//        $decode = JWTAuth::decode($tokens);
+        $payload = JWTAuth::getPayload($token);
 
 //        $user = JWTAuth::parseToken()->toUser();
-        return response()->json([$decode,$tokens],200);
+        return response()->json([$payload],200);
+//        return response()->json([$decode,$tokens,$payload],200);
     }
 }
