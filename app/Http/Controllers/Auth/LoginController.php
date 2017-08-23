@@ -58,15 +58,23 @@ class LoginController extends Controller
             $pass=User::where('email','=',$loginData['email'])->first();
             if($pass)
             {
-                if(hash('sha512',$loginData['password'])==$pass->password) {
-                    $customClaims = ["email"=>$pass->email,"role"=>$pass->role];
-                    $token =JWTAuth::fromUser($pass,$customClaims);
-                    return response()->json(["msg"=>"login Success!","token"=>$token,"user"=>$pass],200);
+                if($pass['status']==1)
+                {
+                    if(hash('sha512',$loginData['password'])==$pass->password) {
+                        $customClaims = ["email"=>$pass->email,"role"=>$pass->role];
+                        $token =JWTAuth::fromUser($pass,$customClaims);
+                        return response()->json(["msg"=>"login Success!","token"=>$token,"user"=>$pass],200);
+                    }
+                    else
+                    {
+                        return response()->json("Email Or Password Incorrect",401);
+                    }
                 }
                 else
                 {
-                    return response()->json("Email Or Password Incorrect",401);
+                    return response()->json("User Not Active",401);
                 }
+
             }
             else
             {
@@ -84,32 +92,42 @@ class LoginController extends Controller
             'name' => 'required',
         ]);
 
+        $exUser=User::where('email','=',$request['email'])->first();
+        $nameUser=User::where('name','=',$request['name'])->first();
 
-        if(!$validate->fails())
+        if(empty($exUser))
         {
-            $user=new User();
-            $user->name=$request['name'];
-            $user->email=$request['email'];
-            $user->password=hash('sha512',$request['password']);
-            $user->role=$request['role'];
-            $user->save();
-
-            if($user->save())
+            if(empty($nameUser))
             {
-                Mail::send('email', array('user'=>$request->all()), function ($message)use ($request) {
-                    $message->to($request['email'],$request['name'])
-                        ->subject('Login Details');
-                });
-                return response()->json("user created",201);
+                $user=new User();
+                $user->name=$request['name'];
+                $user->email=$request['email'];
+                $user->password=hash('sha512',$request['password']);
+                $user->role=$request['role'];
+                $user->save();
+
+                if($user->save())
+                {
+                    Mail::send('email', array('user'=>$request->all()), function ($message)use ($request) {
+                        $message->to($request['email'],$request['name'])
+                            ->subject('Login Details');
+                    });
+                    return response()->json("user created",201);
+                }
+                else
+                {
+                    return response()->json("something went wrong",500);
+                }
             }
             else
             {
-                return response()->json("something went wrong",500);
+                return response()->json(['Name Has Already Taken'],500);
             }
+
         }
         else
         {
-            return response()->json($validate->errors(),500);
+            return response()->json(['Email Has Already Taken'],500);
         }
     }
 
@@ -172,19 +190,25 @@ class LoginController extends Controller
                 $message->to($user['email'],$user['name'])
                     ->subject('Reset Password');
             });
-            return response()->json(["msg"=>"Check Your Email"],200);
+            return response()->json(["msg"=>"Password Reset Information Send To Your Email"],200);
         }
 
     }
 
-    public function getRestPwdUser($token=null,Request $request)
+    public function activeUser($id=null,Request $request)
     {
-        JWTAuth::setToken($token);
+        $user=User::find($id);
+        $user->status=$request['status'];
+        $user->save();
 
-        $tokens = JWTAuth::getToken();
-        $decode = JWTAuth::decode($tokens);
+        if($user->save())
+        {
+            return response()->json(["msg"=>"user updated",$request],200);
+        }
+        else
+        {
+            return response()->json(["msg"=>"user updated failed"],500);
+        }
 
-//        $user = JWTAuth::parseToken()->toUser();
-        return response()->json([$decode,$tokens],200);
     }
 }

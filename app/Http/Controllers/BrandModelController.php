@@ -61,11 +61,11 @@ class BrandModelController extends Controller
 
         if($success)
         {
-            return response()->json(["msg"=>" Models Created"],200);
+            return response()->json(["msg"=>" Vehicle Type Created"],200);
         }
         else
         {
-            return response()->json(["msg"=>"Models Created Failed"],500);
+            return response()->json(["msg"=>"Vehicle Type Create Failed"],500);
         }
 
     }

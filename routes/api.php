@@ -28,6 +28,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::get('user/{id}',['as' => 'loadUser', 'uses' =>'Auth\LoginController@loadUser']);
     Route::post('createUser', ['as' => 'createUser', 'uses' => 'Auth\LoginController@createUser']);
     Route::put('editUser/{id}',['as' => 'editUser', 'uses' =>'Auth\LoginController@editUser']);
+    Route::put('activeUser/{id}',['as' => 'activeUser', 'uses' =>'Auth\LoginController@activeUser']);
 
 
 //brand routes..........................................
