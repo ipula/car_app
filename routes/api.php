@@ -99,6 +99,11 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::get('searchServiceMaterial/{name}',['as' => 'searchServiceMaterial', 'uses' =>'ServiceMaterialController@searchServiceMaterial']);
     Route::get('searchServiceMaterialByCode/{code}',['as' => 'searchServiceMaterialByCode', 'uses' =>'ServiceMaterialController@searchServiceMaterialByCode']);
 
+
+    Route::get('searchServiceMaterialWeb/{name}',['as' => 'searchServiceMaterialWeb', 'uses' =>'ServiceMaterialController@searchServiceMaterialWeb']);
+    Route::get('getMaterialWeb',['as' => 'getMaterialWeb', 'uses' =>'ServiceMaterialController@getMaterialWeb']);
+
+
     //invoice....................
 
     Route::get('getAllInvoice',['as' => 'getAllInvoice', 'uses' =>'InvoiceController@getAllInvoice']);

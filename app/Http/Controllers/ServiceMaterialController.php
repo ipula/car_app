@@ -12,6 +12,11 @@ class ServiceMaterialController extends Controller
         $material=ServiceMaterial::all();
         return response()->json(["material"=>$material],200);
     }
+    public function getMaterialWeb()
+    {
+        $material=ServiceMaterial::paginate(10);
+        return response()->json(["material"=>$material],200);
+    }
 
     public function addServiceMaterial(Request $request)
     {
@@ -72,6 +77,12 @@ class ServiceMaterialController extends Controller
     public function searchServiceMaterial($name=null)
     {
         $material=ServiceMaterial::where('service_material_name','LIKE', '%' . $name . '%')->get();
+        return response()->json(["material"=>$material],200);
+
+    }
+    public function searchServiceMaterialWeb($name=null)
+    {
+        $material=ServiceMaterial::where('service_material_name','LIKE', '%' . $name . '%')->paginate(10);
         return response()->json(["material"=>$material],200);
 
     }
