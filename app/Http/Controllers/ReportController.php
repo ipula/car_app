@@ -103,7 +103,7 @@ class ReportController extends Controller
             if(count($job)!=0)
             {
                 $invoice = Invoice::with(['getJobCard.getVehicle.getAgent', 'getJobCard.getUser', 'getJobCard.getJobCardDetails.getTechnician', 'getJobCard.getJobCardDetails.getService', 'getJobCard.getJobCardDetails.getTechnician', 'getJobCard.getJobCardDetails.getServiceType', 'getJobCard.getJobCardMaterial.getMaterial', 'getUsers'])->where('invoice_job_card_id','=',$job[0]['job_card_id'])->whereBetween('invoice_date',[$dateFrom,$dateTo])->get();
-                return response()->json(['invoice' => $invoice,"dateFrom"=>$id,"dateTo"=>$dateTo]);
+                return response()->json(['invoice' => $invoice,"dateFrom"=>$dateFrom,"dateTo"=>$dateTo]);
             }
             else
             {

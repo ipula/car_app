@@ -133,6 +133,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::get('v1/getAllStock',['as' => 'getAllStock', 'uses' =>'StockController@getAllStock']);
     Route::get('v1/getLowStock',['as' => 'getStock', 'uses' =>'StockController@getLowStock']);
     Route::get('v1/searchStock/{name}',['as' => 'searchStock', 'uses' =>'StockController@searchStock']);
+    Route::get('v1/searchLowStock/{name}',['as' => 'searchLowStock', 'uses' =>'StockController@searchLowStock']);
     Route::get('v1/getItemStock',['as' => 'getItemStock', 'uses' =>'StockController@getItemStock']);
     Route::get('v1/getItemStockSearch/{name}',['as' => 'searchStock', 'uses' =>'StockController@getItemStockSearch']);
 

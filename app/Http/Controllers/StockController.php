@@ -41,4 +41,9 @@ class StockController extends Controller
         $stock=CurrentStock::where('service_material_name','LIKE','%'.$name.'%')->orderBy('service_material_id','desc')->paginate(10);
         return response()->json(["stock"=>$stock],200);
     }
+    public function searchLowStock($name=null)
+    {
+        $stock=CurrentStock::where('service_material_name','LIKE','%'.$name.'%')->where('stock_qty','<=','service_material_low_qty')->paginate(10);
+        return response()->json(["stock"=>$stock],200);
+    }
 }
