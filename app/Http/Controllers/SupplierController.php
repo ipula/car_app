@@ -37,14 +37,12 @@ class SupplierController extends Controller
     {
         if(isset($request['page']) && $request['page']!=0)
         {
-            $supplier=Supplier::paginate(10);
+            $supplier=Supplier::orderBy('supplier_id','desc')->paginate(10);
         }
         else
         {
             $supplier=Supplier::all();
         }
-
-//        return response()->json(["supplier"=>$request['page']],200);
         return response()->json(["supplier"=>$supplier],200);
     }
 
@@ -70,13 +68,13 @@ class SupplierController extends Controller
 
     public function searchSupplier($name=null)
     {
-        $supplier=Supplier::where('supplier_name','LIKE', '%' . $name . '%')->get();
+        $supplier=Supplier::where('supplier_name','LIKE', '%' . $name . '%')->orderBy('supplier_id','desc')->get();
         return response()->json(["supplier"=>$supplier],200);
     }
 
     public function searchSupplierPaginate($name=null)
     {
-        $supplier=Supplier::where('supplier_name','LIKE', '%' . $name . '%')->paginate(10);
+        $supplier=Supplier::where('supplier_name','LIKE', '%' . $name . '%')->orderBy('supplier_id','desc')->paginate(10);
         return response()->json(["supplier"=>$supplier],200);
     }
 }

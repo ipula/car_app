@@ -14,7 +14,7 @@ class ServiceMaterialController extends Controller
     }
     public function getMaterialWeb()
     {
-        $material=ServiceMaterial::paginate(10);
+        $material=ServiceMaterial::orderBy('service_material_id','desc')->paginate(10);
         return response()->json(["material"=>$material],200);
     }
 

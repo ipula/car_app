@@ -9,7 +9,7 @@ class WarrantyController extends Controller
 {
     public function getWarranty()
     {
-        $warranty=Warranty::with(['getVehicle'])->paginate(10);
+        $warranty=Warranty::with(['getVehicle'])->orderBy('warranty_id','desc')->paginate(10);
         return response()->json(["warranty"=>$warranty],200);
     }
 
@@ -49,7 +49,7 @@ class WarrantyController extends Controller
             $numb = $no;
             $q->where('vehicle_no','LIKE', '%' . $numb . '%');
 
-        })->paginate(10);
+        })->orderBy('warranty_id','desc')->paginate(10);
         return response()->json(["warranty"=>$warranty],200);
     }
 

@@ -12,7 +12,7 @@ class TechnicianController extends Controller
     public function getTechnician(Request $request)
     {
         if(isset($request['page']) && $request['page']!=0){
-            $technician=Technician::paginate(10);
+            $technician=Technician::orderBy('technician_id','desc')->paginate(10);
         }
         else
         {
@@ -35,12 +35,6 @@ class TechnicianController extends Controller
 
         if($technician->save())
         {
-//            Mail::to('ipularanasinghe007@gmail.com')->send(new Account);
-//            $data = []; // Empty array
-//            Mail::send('email',$data, function($message) {
-//                $message->to('ipularanasinghe007@gmail.com');
-////                $message->subject('Mailgun Testing');
-//            });
             return response()->json(["msg"=>"New Technician Created"],200);
         }
         else
@@ -79,12 +73,12 @@ class TechnicianController extends Controller
 
     public function searchTechnician($name=null)
     {
-        $technician=Technician::where('technician_name','LIKE', '%' . $name . '%')->get();
+        $technician=Technician::where('technician_name','LIKE', '%' . $name . '%')->orderBy('technician_id','desc')->get();
         return response()->json(["technician"=>$technician],200);
     }
     public function searchTechnicianPaginate($name=null)
     {
-        $technician=Technician::where('technician_name','LIKE', '%' . $name . '%')->paginate(10);
+        $technician=Technician::where('technician_name','LIKE', '%' . $name . '%')->orderBy('technician_id','desc')->paginate(10);
         return response()->json(["technician"=>$technician],200);
     }
 }

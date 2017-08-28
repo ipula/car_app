@@ -16,7 +16,6 @@ class ServiceController extends Controller
     ///changed...........
     public function getService()
     {
-//        $service=Service::with(['getModels'])->get();
         $service=ModelServicePrice::with(['getModels','getService'])->get();
         return response()->json(['service'=>$service],200);
     }
@@ -27,7 +26,6 @@ class ServiceController extends Controller
         $service= new Service();
         $service->service_name=$data['service_name'];
         $service->service_price=$data['service_price'];
-//        $service->service_models_id=$data['service_models_id'];
         $service->save();
 
         if($service->save())
@@ -65,22 +63,10 @@ class ServiceController extends Controller
         $data=$request->all();
         $success=false;
 
-//        $service=Service::find($data['service_id']);
-//
-//            $serviceTypes=new ServiceType();
-//            $serviceTypes->service_type_name=$data['service_type_name'];
-//            $serviceTypes->service_type_price=$data['service_type_price'];
-//            $success=$serviceTypes->save();
-//            if($serviceTypes->save())
-//            {
-//                $service->getServiceTypes()->attach(ServiceType::max('service_type_id'));
-//            }
-
         $service=new ServiceService();
         $service->service_service_service_id=$data['service_id'];
         $service->service_service_type_id=$data['service_type_id'];
         $success=$service->save();
-
 
         if($success)
         {
@@ -96,7 +82,6 @@ class ServiceController extends Controller
     public function loadServiceTypes($id=null)
     {
         $data=array();
-//        $service=Service::with(['getModels'])->find($id)->getServiceTypes()->get();
         $service=ServiceService::where('service_service_service_id','=',$id)->get();
 
         for($x=0; $x< count($service); $x++)
@@ -109,15 +94,12 @@ class ServiceController extends Controller
     }
     public function loadServiceByModels($id=null)
     {
-//        $service=Service::where('service_models_id','=',$id)->get();
         $service=ModelServicePrice::where('model_service_price_model_id','=',$id)->get();
         return response()->json(['serviceTypes'=>$service],200);
     }
     public function loadServiceByModelsBrand($modelId=null)
     {
         $service=ModelServicePrice::with(['getService'])->where('model_service_price_model_id','=',$modelId)->get();
-//        $sql='select * from service where service_models_id='."$modelId";
-//        $result = DB::select(DB::raw($sql));
         return response()->json(['serviceTypes'=>$service],200);
     }
 
@@ -215,7 +197,6 @@ class ServiceController extends Controller
         for ($x=0; $x<count($result); $x++)
         {
             $data[$x]['name']=$result[$x]->invoice_date;
-//            $data[$x]['name']="test";
             $data[$x]['value']=(double)$result[$x]->invoice_total;
         }
         return response()->json($data,200);

@@ -11,13 +11,13 @@ class VehicleController extends Controller
     {
         if(isset($request['page']) &&$request['page']!=0)
         {
-            $vehicle=Vehicle::with(['getBrand','getModel','getAgent'])->paginate(10);
+            $vehicle=Vehicle::with(['getBrand','getModel','getAgent'])->orderBy('vehicle_id','desc')->paginate(10);
             return response()->json(["vehicle"=>$vehicle],200);
 
         }
         else
         {
-            $vehicle=Vehicle::with(['getBrand','getModel','getAgent'])->get()
+            $vehicle=Vehicle::with(['getBrand','getModel','getAgent'])->orderBy('vehicle_id','desc')->get()
             ;return response()->json(["vehicle"=>$vehicle],200);
         }
 
@@ -87,13 +87,13 @@ class VehicleController extends Controller
     }
     public function searchVehicle($number=null)
     {
-        $vehicle=Vehicle::with(['getBrand','getModel','getAgent'])->where('vehicle_no','LIKE', '%' . $number . '%')->get();
+        $vehicle=Vehicle::with(['getBrand','getModel','getAgent'])->where('vehicle_no','LIKE', '%' . $number . '%')->orderBy('vehicle_id','desc')->get();
         return response()->json(["vehicle"=>$vehicle],200);
     }
 
     public function searchVehiclePaginate($number=null)
     {
-        $vehicle=Vehicle::with(['getBrand','getModel','getAgent'])->where('vehicle_no','LIKE', '%' . $number . '%')->paginate(10);
+        $vehicle=Vehicle::with(['getBrand','getModel','getAgent'])->where('vehicle_no','LIKE', '%' . $number . '%')->orderBy('vehicle_id','desc')->paginate(10);
         return response()->json(["vehicle"=>$vehicle],200);
     }
 }
