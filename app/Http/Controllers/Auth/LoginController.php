@@ -134,7 +134,7 @@ class LoginController extends Controller
     public function getUsers()
     {
 
-        $user=User::orderBy('vehicle_id','desc')->paginate(10);
+        $user=User::orderBy('id','desc')->paginate(10);
         return response()->json(["users"=>$user],200);
 
     }
