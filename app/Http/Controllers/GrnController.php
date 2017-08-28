@@ -12,7 +12,7 @@ class GrnController extends Controller
 {
     public function getGrn()
     {
-        $grn=Grn::with(['getGrnDetail.getServiceMaterial','getSupplier'])->paginate(10);
+        $grn=Grn::with(['getGrnDetail.getServiceMaterial','getSupplier'])->orderBy('grn_id','desc')->paginate(10);
         return response()->json(['grn'=>$grn],200);
 
     }
@@ -65,9 +65,6 @@ class GrnController extends Controller
                 $newGrnPayment->grn_payment_grn_id=Grn::max('grn_id');
                 $newGrnPayment->grn_payment_type=2;
                 $newGrnPayment->grn_payment_amount=$cash['cash_amount'];
-//                $newGrnPayment->grn_payment_effective_date=date('Y-m-d');
-//                $newGrnPayment->grn_payment_bank=
-//                $newGrnPayment->grn_payment_note=
                 $newGrnPayment->save();
             }
             foreach ($data['addedChequePayments'] as $cheque)

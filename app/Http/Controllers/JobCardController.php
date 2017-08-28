@@ -14,7 +14,7 @@ class JobCardController extends Controller
     {
         if(isset($request['page']) && $request['page']!=0)
         {
-            $job=JobCard::with(['getVehicle.getBrand','getVehicle.getModel','getVehicle.getAgent','getUser','getJobCardMaterial.getMaterial','getJobCardDetails.getService','getJobCardDetails.getTechnician.techData'])->paginate(10);
+            $job=JobCard::with(['getVehicle.getBrand','getVehicle.getModel','getVehicle.getAgent','getUser','getJobCardMaterial.getMaterial','getJobCardDetails.getService','getJobCardDetails.getTechnician.techData'])->orderBy('job_card_id','desc')->paginate(10);
         }
         else
         {
@@ -194,7 +194,6 @@ class JobCardController extends Controller
                         $jobCardDetail->job_card_detail_status = $data['addedDetail'][$x]['job_card_detail_status'];
                         $jobCardDetail->job_card_detail_quantity = $data['addedDetail'][$x]['job_card_detail_quantity'];
                         $jobCardDetail->job_card_detail_unit_price = $data['addedDetail'][$x]['job_card_detail_unit_price'];
-//                        $jobCardDetail->job_card_warranty_status = $data['addedDetail'][$x]['job_card_warranty_status'];
                         $success = $jobCardDetail->save();
 
                         if ($jobCardDetail->save()) {
@@ -311,7 +310,7 @@ class JobCardController extends Controller
             $numb = $no;
             $q->where('vehicle_no','LIKE', '%' . $numb . '%');
 
-        })->paginate(10);
+        })->orderBy('job_card_id','desc')->paginate(10);
         return response()->json(['job'=>$job],200);
     }
 }

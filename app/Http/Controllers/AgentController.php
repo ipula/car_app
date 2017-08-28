@@ -62,7 +62,7 @@ class AgentController extends Controller
     {
         if(isset($request['page']) && $request['page']!=0)
         {
-            $agent=Agent::paginate(10);
+            $agent=Agent::orderBy('agent_id','desc')->paginate(10);
         }
         else
         {
@@ -79,7 +79,7 @@ class AgentController extends Controller
 
     public function searchAgentPaginate($name=null)
     {
-        $agent=Agent::where('agent_name','LIKE', '%' . $name . '%')->paginate(10);
+        $agent=Agent::where('agent_name','LIKE', '%' . $name . '%')->orderBy('agent_id','desc')->paginate(10);
         return response()->json(["agent"=>$agent],200);
     }
 
