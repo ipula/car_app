@@ -108,7 +108,7 @@ class ReportController extends Controller
             else
             {
                 $invoice=[];
-                return response()->json(['invoice' => $invoice,"dateFrom"=>$id,"dateTo"=>$dateTo]);
+                return response()->json(['invoice' => $invoice,"dateFrom"=>$dateFrom,"dateTo"=>$dateTo]);
             }
 
         }
