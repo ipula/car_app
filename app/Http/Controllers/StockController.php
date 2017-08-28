@@ -12,6 +12,11 @@ class StockController extends Controller
         $stock=CurrentStock::orderBy('service_material_id','desc')->paginate(10);
         return response()->json(["stock"=>$stock],200);
     }
+    public function getAllStock()
+    {
+        $stock=CurrentStock::orderBy('service_material_id','desc')->get();
+        return response()->json(["stock"=>$stock],200);
+    }
 
     public function getLowStock()
     {
