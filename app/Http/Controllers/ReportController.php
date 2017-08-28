@@ -25,21 +25,21 @@ class ReportController extends Controller
             $dateFrom=date('Y-m-d',strtotime( date('Y-m-d') . ' -1 day' ));;
             $dateTo=date('Y-m-d');
 
-            $amount="SELECT SUM(service_material_unit_price*service_material_detail_qty) as sumOf,invoice_date,job_card_id,agent_name,vehicle_no,job_card_total,agent_discount FROM invoice INNER JOIN job_card on invoice_job_card_id=job_card_id inner join vehicle on job_card_vehicle_id=vehicle_id INNER JOIN agent on vehicle_agent_id=agent_id inner join service_material_detail on=service_material_detail_job_card_id
+            $amount="SELECT SUM(service_material_unit_price*service_material_detail_qty) as sumOf,invoice_date,job_card_id,agent_name,vehicle_no,job_card_total,agent_discount FROM invoice INNER JOIN job_card on invoice_job_card_id=job_card_id inner join vehicle on job_card_vehicle_id=vehicle_id INNER JOIN agent on vehicle_agent_id=agent_id inner join service_material_detail on job_card_id=service_material_detail_job_card_id
                   where invoice_date between "."'$dateFrom'"." and "."'$dateTo'"."group by job_card_id";
             $result=DB::select(DB::raw($amount));
             return response()->json(["amount"=>$result,"dateFrom"=>$dateFrom,"dateTo"=>$dateTo],200);
         }
         else if($dateFrom!="null" && $dateFrom!="null" && $id=="null")
         {
-            $amount="SELECT SUM(service_material_unit_price*service_material_detail_qty) as sumOf,invoice_date,job_card_id,agent_name,vehicle_no,job_card_total,agent_discount FROM invoice INNER JOIN job_card on invoice_job_card_id=job_card_id inner join vehicle on job_card_vehicle_id=vehicle_id INNER JOIN agent on vehicle_agent_id=agent_id
+            $amount="SELECT SUM(service_material_unit_price*service_material_detail_qty) as sumOf,invoice_date,job_card_id,agent_name,vehicle_no,job_card_total,agent_discount FROM invoice INNER JOIN job_card on invoice_job_card_id=job_card_id inner join vehicle on job_card_vehicle_id=vehicle_id INNER JOIN agent on vehicle_agent_id=agent_id inner join service_material_detail on job_card_id=service_material_detail_job_card_id
                   where invoice_date between "."'$dateFrom'"." and "."'$dateTo'";
             $result=DB::select(DB::raw($amount));
             return response()->json(["amount"=>$result,"dateFrom"=>$dateFrom,"dateTo"=>$dateTo],200);
         }
         else
         {
-            $amount="SELECT SUM(service_material_unit_price*service_material_detail_qty) as sumOf,invoice_date,job_card_id,agent_name,vehicle_no,job_card_total,agent_discount FROM invoice INNER JOIN job_card on invoice_job_card_id=job_card_id inner join vehicle on job_card_vehicle_id=vehicle_id INNER JOIN agent on vehicle_agent_id=agent_id
+            $amount="SELECT SUM(service_material_unit_price*service_material_detail_qty) as sumOf,invoice_date,job_card_id,agent_name,vehicle_no,job_card_total,agent_discount FROM invoice INNER JOIN job_card on invoice_job_card_id=job_card_id inner join vehicle on job_card_vehicle_id=vehicle_id INNER JOIN agent on vehicle_agent_id=agent_id inner join service_material_detail on job_card_id=service_material_detail_job_card_id
                   where invoice_date between "."'$dateFrom'"." and "."'$dateTo'"." AND agent_id="."$id";
             $result=DB::select(DB::raw($amount));
             return response()->json(["amount"=>$result,"dateFrom"=>$dateFrom,"dateTo"=>$dateTo],200);
