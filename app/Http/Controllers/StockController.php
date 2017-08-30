@@ -20,7 +20,15 @@ class StockController extends Controller
 
     public function getLowStock()
     {
-        $stock=CurrentStock::where('stock_qty','<=','service_material_low_qty')->paginate(10);
+        if(isset($request['page']) && $request['page']!=0)
+        {
+            $stock=CurrentStock::where('stock_qty','<=','service_material_low_qty')->paginate(10);
+        }
+        else
+        {
+            $stock=CurrentStock::where('stock_qty','<=','service_material_low_qty')->get();
+        }
+
         return response()->json(["stock"=>$stock],200);
     }
 

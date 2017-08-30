@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email',255)->default(null)->nullable();
             $table->string('password',450)->default(null)->nullable();
             $table->string('role',450)->default(null)->nullable();
+            $table->integer('status')->default(1);
             $table->timestamps();
 
         });
