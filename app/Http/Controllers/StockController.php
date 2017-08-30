@@ -18,7 +18,7 @@ class StockController extends Controller
         return response()->json(["stock"=>$stock],200);
     }
 
-    public function getLowStock()
+    public function getLowStock(Request $request )
     {
         if(isset($request['page']) && $request['page']!=0)
         {
