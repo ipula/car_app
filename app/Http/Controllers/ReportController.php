@@ -94,21 +94,27 @@ class ReportController extends Controller
 
             $dateFrom=date('Y-m-d',strtotime( date('Y-m-d') . ' -1 day' ));;
             $dateTo=date('Y-m-d');
+//            $invoice=[];
             $invoice = Invoice::with(['getJobCard.getVehicle.getAgent', 'getJobCard.getUser', 'getJobCard.getJobCardDetails.getTechnician', 'getJobCard.getJobCardDetails.getService', 'getJobCard.getJobCardDetails.getTechnician', 'getJobCard.getJobCardDetails.getServiceType', 'getJobCard.getJobCardMaterial.getMaterial', 'getUsers'])->whereBetween('invoice_date',[$dateFrom,$dateTo])->get();
-            return response()->json(['invoice' => $invoice,"dateFrom"=>$dateFrom,"dateTo"=>$dateTo]);
+            return response()->json(['invoice' => $invoice,"dateFrom"=>$dateFrom,"dateTo"=>$dateTo],200);
         }
         else
         {
             $job=JobCard::select('job_card_id')->where('job_card_vehicle_id','=',$id)->get();
             if(count($job)!=0)
             {
-                $invoice = Invoice::with(['getJobCard.getVehicle.getAgent', 'getJobCard.getUser', 'getJobCard.getJobCardDetails.getTechnician', 'getJobCard.getJobCardDetails.getService', 'getJobCard.getJobCardDetails.getTechnician', 'getJobCard.getJobCardDetails.getServiceType', 'getJobCard.getJobCardMaterial.getMaterial', 'getUsers'])->where('invoice_job_card_id','=',$job[0]['job_card_id'])->whereBetween('invoice_date',[$dateFrom,$dateTo])->get();
-                return response()->json(['invoice' => $invoice,"dateFrom"=>$dateFrom,"dateTo"=>$dateTo]);
+                $invoice=[];
+                for($x=0; $x<count($job); $x++)
+                {
+                    $invoice[$x] = Invoice::with(['getJobCard.getVehicle.getAgent', 'getJobCard.getUser', 'getJobCard.getJobCardDetails.getTechnician', 'getJobCard.getJobCardDetails.getService', 'getJobCard.getJobCardDetails.getTechnician', 'getJobCard.getJobCardDetails.getServiceType', 'getJobCard.getJobCardMaterial.getMaterial', 'getUsers'])->where('invoice_job_card_id','=',$job[$x]['job_card_id'])->whereBetween('invoice_date',[$dateFrom,$dateTo])->get();
+                }
+
+                return response()->json(['invoice' => $invoice,"job"=>$job,"dateFrom"=>$dateFrom,"dateTo"=>$dateTo],200);
             }
             else
             {
-                $invoice=["no data"];
-                return response()->json(['invoice' => $invoice,"dateFrom"=>$dateFrom,"dateTo"=>$dateTo]);
+                $invoice=[];
+                return response()->json(['invoice' => $invoice,"dateFrom"=>$dateFrom,"dateTo"=>$dateTo],200);
             }
 
         }
