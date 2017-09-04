@@ -100,22 +100,15 @@ class ReportController extends Controller
         }
         else
         {
-            $job=JobCard::select('job_card_id')->where('job_card_vehicle_id','=',$id)->get();
-            if(count($job)!=0)
-            {
-                $invoice=[];
-                for($x=0; $x<count($job); $x++)
-                {
-                    $invoice[$x] = Invoice::with(['getJobCard.getVehicle.getAgent', 'getJobCard.getUser', 'getJobCard.getJobCardDetails.getTechnician', 'getJobCard.getJobCardDetails.getService', 'getJobCard.getJobCardDetails.getTechnician', 'getJobCard.getJobCardDetails.getServiceType', 'getJobCard.getJobCardMaterial.getMaterial', 'getUsers'])->where('invoice_job_card_id','=',$job[$x]['job_card_id'])->whereBetween('invoice_date',[$dateFrom,$dateTo])->get();
-                }
 
-                return response()->json(['invoice' => $invoice,"job"=>$job,"dateFrom"=>$dateFrom,"dateTo"=>$dateTo],200);
-            }
-            else
-            {
-                $invoice=[];
+            $invoice=Invoice::with(['getJobCard.getVehicle.getAgent', 'getJobCard.getUser', 'getJobCard.getJobCardDetails.getTechnician', 'getJobCard.getJobCardDetails.getService', 'getJobCard.getJobCardDetails.getTechnician', 'getJobCard.getJobCardDetails.getServiceType', 'getJobCard.getJobCardMaterial.getMaterial', 'getUsers'])->whereHas('getJobCard', function($q) use($id)
+                {
+                    $numb = $id;
+                    $q->where('job_card_vehicle_id','=',$numb);
+
+                })->get();
+
                 return response()->json(['invoice' => $invoice,"dateFrom"=>$dateFrom,"dateTo"=>$dateTo],200);
-            }
 
         }
     }
