@@ -176,18 +176,17 @@ class ServiceController extends Controller
         $data=$request->all();
         $modelServicePrice=ModelServicePrice::find($id);
         $modelServicePrice->model_service_price=$data['model_service_price'];
-//        $modelServicePrice->model_service_price=$data['get_service']['service_name'];
         $modelServicePrice->save();
         if($modelServicePrice->save())
         {
             $service=Service::find($data['get_service']['service_id']);
             $service->service_name=$data['get_service']['service_name'];
             $service->save();
-            return response()->json(["msg"=>" Service Price updated"],200);
+            return response()->json(["msg"=>" Service updated"],200);
         }
         else
         {
-            return response()->json(["msg"=>"Service Price updated Failed"],500);
+            return response()->json(["msg"=>"Service updated Failed"],500);
         }
     }
 
