@@ -177,6 +177,7 @@ class ServiceController extends Controller
         $data=$request->all();
         $modelServicePrice=ModelServicePrice::find($id);
         $modelServicePrice->model_service_price=$data['model_service_price'];
+        $modelServicePrice->model_service_price=$data['get_service']['service_name'];
         $modelServicePrice->save();
         if($modelServicePrice->save())
         {
