@@ -33,6 +33,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
 
 //brand routes..........................................
     Route::get('v1/getBrand',['as' => 'getBrand', 'uses' =>'BrandModelController@getBrand']);
+    Route::get('v1/loadBrand/{id}',['as' => 'loadBrand', 'uses' =>'BrandModelController@loadBrand']);
     Route::post('v1/createBrand',['as' => 'createBrand', 'uses' =>'BrandModelController@createBrand']);
     Route::put('v1/editBrand/{id}',['as' => 'editBrand', 'uses' =>'BrandModelController@editBrand']);
 

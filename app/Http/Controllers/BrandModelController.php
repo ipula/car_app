@@ -50,6 +50,12 @@ class BrandModelController extends Controller
 
     }
 
+    public function loadBrand($id=null)
+    {
+        $brand=Brand::find($id);
+        return response()->json(["brand"=>$brand],200);
+    }
+
     public function createModels(Request $request)
     {
         $data=$request->all();
