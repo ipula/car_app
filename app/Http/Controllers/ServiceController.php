@@ -181,6 +181,7 @@ class ServiceController extends Controller
         {
             $service=Service::find($data['get_service']['service_id']);
             $service->service_name=$data['get_service']['service_name'];
+            $service->service_category=$data['get_service']['service_category'];
             $service->save();
             return response()->json(["msg"=>" Service updated"],200);
         }
