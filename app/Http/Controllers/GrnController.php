@@ -31,7 +31,7 @@ class GrnController extends Controller
         $grn->grn_sup_id=$data['supplier']['supplier_id'];
         $grn->grn_users_id=Auth::user()->id;
         $grn->grn_discount=$data['grnData']['discount'];
-        $grn->grn_total=$data['itemAggregateData']['total_amount']-($data['itemAggregateData']['total_amount']*($data['grnData']['discount']/100));
+        $grn->grn_total=$data['itemAggregateData']['total_amount'];
         $grn->save();
 
         if($grn->save())
