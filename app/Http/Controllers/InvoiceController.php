@@ -12,7 +12,7 @@ class InvoiceController extends Controller
     public function getAllInvoice(Request $request)
     {
         if(isset($request['page']) && $request['page']!=0) {
-            $invoice = Invoice::with(['getJobCard.getVehicle', 'getJobCard.getUser', 'getUsers'])->orderBy('invoice_no','desc')->paginate(10);
+            $invoice = Invoice::with(['getJobCard.getVehicle','getJobCard.getVehicle.getAgent', 'getJobCard.getUser','getJobCard.getJobCardMaterial', 'getUsers'])->orderBy('invoice_no','desc')->paginate(10);
 
         }
         else
