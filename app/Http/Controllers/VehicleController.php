@@ -32,7 +32,7 @@ class VehicleController extends Controller
         $vehicle->vehicle_no=$data['vehicle_no'];
         $vehicle->vehicle_cust_tel1=$data['vehicle_cust_tel1'];
         $vehicle->vehicle_cust_tel2=$data['vehicle_cust_tel2'];
-        $vehicle->vehicle_coupon_no=$data['vehicle_coupon_no'];
+        $vehicle->vehicle_cupon_no=$data['vehicle_coupon_no'];
         $vehicle->vehicle_cust_address=$data['vehicle_cust_address'];
         $vehicle->vehicle_engine_no=$data['vehicle_engine_no'];
         $vehicle->vehicle_chassis_no=$data['vehicle_chassis_no'];

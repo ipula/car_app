@@ -47,7 +47,7 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $loginData=$request->only('email','password');
-
+//        return response()->json($loginData,200);
 
         if(!isset($loginData['email'])||!isset($loginData['password']))
         {
